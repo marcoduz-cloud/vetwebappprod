@@ -5,9 +5,7 @@ import "./login.css";
 export default function LoginPage() {
   const logoSrc =
     process.env.NEXT_PUBLIC_BRAND_LOGO_URL ||
-    (process.env.NEXT_PUBLIC_SUPABASE_URL
-      ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/img/logo_transparent.png`
-      : "/placeholder.svg");
+    "/images/logo-v.png";
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/70 to-primary/80 flex flex-col items-center justify-center p-4">
