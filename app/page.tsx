@@ -636,35 +636,105 @@ export default function LandingPage() {
             </p>
           </div>
 
-          {/* 3 Simple Steps */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
-            <div className="rounded-2xl border border-emerald-200/90 bg-white p-7 space-y-3 shadow-xs hover:border-emerald-300 transition-all">
-              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-800 font-bold text-base">
-                1
+          {/* Step 1: Scenario Selection & Creation (Educator Choice) */}
+          <div className="max-w-5xl mx-auto mb-10">
+            <div className="rounded-3xl border border-emerald-200/90 bg-white p-7 sm:p-9 md:p-10 shadow-xs">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-800 font-bold text-base shrink-0 mt-0.5">
+                  1
+                </div>
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
+                    Step 1 · Scenario Selection &amp; Creation
+                  </span>
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight mt-0.5">
+                    Your Learning Objectives. Your Choice of Scenarios.
+                  </h3>
+                </div>
               </div>
-              <h3 className="text-lg font-bold text-slate-900">Choose a scenario</h3>
+
+              <p className="text-sm sm:text-base text-slate-700 leading-relaxed mb-6">
+                Create scenarios tailored to your teaching, or choose from VEWAI&apos;s specialist-authored cases.
+              </p>
+
+              {/* Two Equal Options */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Option 1: Create Your Own Scenarios */}
+                <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-6 space-y-3 hover:border-emerald-300 transition-all">
+                  <div className="flex items-center gap-3">
+                    <div className="h-9 w-9 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700">
+                      <Sparkles className="h-4 w-4" />
+                    </div>
+                    <h4 className="text-base font-bold text-slate-900">
+                      Create Your Own Scenarios
+                    </h4>
+                  </div>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    Build scenarios around the communication skills, topics and learning objectives you want your students to practise. Tailor the conversation to their stage of training and your curriculum.
+                  </p>
+                </div>
+
+                {/* Option 2: Use Specialist-Authored Cases */}
+                <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-6 space-y-3 hover:border-emerald-300 transition-all">
+                  <div className="flex items-center gap-3">
+                    <div className="h-9 w-9 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700">
+                      <ShieldCheck className="h-4 w-4" />
+                    </div>
+                    <h4 className="text-base font-bold text-slate-900">
+                      Use Specialist-Authored Cases
+                    </h4>
+                  </div>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    Choose ready-made clinical scenarios authored by veterinary specialists. These offer an additional practice resource, particularly for students in their final two years and during clinical rotations, which teachers can select to complement the topic being taught.
+                  </p>
+                </div>
+              </div>
+
+              {/* Primary Focus Note */}
+              <div className="mt-6 pt-5 border-t border-emerald-100 text-xs sm:text-sm text-slate-600 leading-relaxed flex items-start gap-2.5">
+                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+                <span>
+                  Communication remains the primary focus across all scenarios, with clinical reasoning incorporated where relevant to the scenario and learning objectives.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Steps 2 & 3: Student Practice & Feedback */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto mb-16">
+            {/* Step 2: Have the conversation */}
+            <div className="rounded-2xl border border-emerald-200/90 bg-white p-7 space-y-3 shadow-xs hover:border-emerald-300 transition-all">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-800 font-bold text-base shrink-0">
+                  2
+                </div>
+                <div>
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-800">
+                    Step 2 · Student Practice
+                  </span>
+                  <h3 className="text-lg font-bold text-slate-900">Have the conversation</h3>
+                </div>
+              </div>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Start with a learning objective suited to the learner&apos;s stage.
+                Engage with an owner or member of the veterinary team and respond as the interaction develops through spoken speech or text dialogue.
               </p>
             </div>
 
+            {/* Step 3: Review and repeat */}
             <div className="rounded-2xl border border-emerald-200/90 bg-white p-7 space-y-3 shadow-xs hover:border-emerald-300 transition-all">
-              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-800 font-bold text-base">
-                2
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-800 font-bold text-base shrink-0">
+                  3
+                </div>
+                <div>
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-800">
+                    Step 3 · Reflection &amp; Feedback
+                  </span>
+                  <h3 className="text-lg font-bold text-slate-900">Review and repeat</h3>
+                </div>
               </div>
-              <h3 className="text-lg font-bold text-slate-900">Have the conversation</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Engage with an owner or member of the veterinary team and respond as the interaction develops.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-emerald-200/90 bg-white p-7 space-y-3 shadow-xs hover:border-emerald-300 transition-all">
-              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-800 font-bold text-base">
-                3
-              </div>
-              <h3 className="text-lg font-bold text-slate-900">Review and repeat</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                See specific feedback, reflect on your approach and try again.
+                See specific feedback structured around established communication frameworks, reflect on your approach and try again.
               </p>
             </div>
           </div>
