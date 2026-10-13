@@ -122,11 +122,11 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f2fbf7] via-[#f7fdfa] to-[#eef9f4] text-slate-900 selection:bg-emerald-200 selection:text-emerald-950 font-sans">
+    <div className="min-h-screen bg-gradient-to-b from-[#f2fbf7] via-[#f7fdfa] to-[#eef9f4] text-slate-900 selection:bg-emerald-200 selection:text-emerald-950 font-sans pt-20">
       {/* ─────────────────────────────────────────────────────────────
-          STICKY NAVIGATION BAR
+          LOCKED TOP NAVIGATION BAR
       ────────────────────────────────────────────────────────────── */}
-      <header className="sticky top-0 z-50 w-full border-b border-emerald-100/80 bg-white/90 backdrop-blur-md shadow-xs">
+      <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-emerald-100 bg-white/95 backdrop-blur-md shadow-sm">
         <div className="container mx-auto flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Brand Logo - Official VEWAI™ with Tagline */}
           <Link href="/" className="flex items-center group py-1" title="VEWAI™ - Veterinary Education with AI">
