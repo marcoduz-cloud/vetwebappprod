@@ -86,6 +86,10 @@ export default function LandingPage() {
   // Testimonials carousel state (strictly manual navigation)
   const [testimonialIndex, setTestimonialIndex] = useState(0);
 
+  // Founders detailed CV expansion state
+  const [expandedMarco, setExpandedMarco] = useState(false);
+  const [expandedIgnacio, setExpandedIgnacio] = useState(false);
+
   const nextTestimonial = () => {
     setTestimonialIndex((prev) => (prev + 1) % TESTIMONIALS.length);
   };
@@ -1067,44 +1071,255 @@ export default function LandingPage() {
             </p>
           </div>
 
-          {/* Clinical Leadership (The Faces) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-14">
-            {/* Dr. Marco Duz */}
-            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-8 space-y-4 shadow-sm hover:border-emerald-300 hover:shadow-md transition-all">
-              <div className="flex items-center gap-4">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 text-white font-extrabold text-lg shadow-md">
-                  MD
+          {/* Featured Founders Showcase: Field Photo on Left, Profiles & Expandable CVs on Right */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start max-w-6xl mx-auto mb-16">
+            {/* Left Column: Authentic Photo Feature */}
+            <div className="lg:col-span-5 space-y-4">
+              <div className="rounded-3xl border border-emerald-200/90 bg-white p-3 shadow-md">
+                <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-emerald-50 shadow-inner">
+                  <Image
+                    src="/images/founders-field.jpg"
+                    alt="Dr. Marco Duz and Dr. Ignacio Corradini in the field with an equine patient at the University of Nottingham"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 42vw"
+                    className="object-cover object-center"
+                    priority
+                  />
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-slate-900">Dr. Marco Duz</h3>
-                  <p className="text-xs text-emerald-800 font-mono font-bold">
-                    MedVet MVM(Res) DipECEIM PhD SFHEA MRCVS
+                <div className="p-4 pt-3.5 space-y-2">
+                  <div className="flex items-center gap-2 text-xs font-bold text-emerald-800">
+                    <span className="inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span>In the Field · University of Nottingham</span>
+                  </div>
+                  <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                    Dr. Marco Duz and Dr. Ignacio Corradini in clinical teaching. Long-standing academic colleagues, European Veterinary Specialists, and educators united by a passion for communication training in veterinary medicine.
                   </p>
-                  <p className="text-xs text-slate-600 font-medium">Co-Founder &amp; Clinical Lead</p>
                 </div>
               </div>
-              <p className="text-sm text-slate-700 leading-relaxed">
-                Clinical Associate Professor in Equine Internal Medicine at the University of Nottingham. Diplomate of the European College of Equine Internal Medicine (ECEIM), Senior Fellow of the Higher Education Academy (SFHEA), and Treasurer of the ECEIM Executive Committee, with over 20 years of clinical and educational experience worldwide.
-              </p>
+
+              {/* Verified Credentials Summary Card */}
+              <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-5 shadow-2xs space-y-3">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-900">
+                  Academic &amp; Specialist Standing
+                </h4>
+                <div className="space-y-2.5 text-xs text-slate-700">
+                  <div className="flex items-start gap-2.5">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <span>European Veterinary Specialists (EBVS® &amp; ECEIM Diplomates)</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <span>University of Nottingham School of Veterinary Medicine &amp; Science</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <span>Higher Education Academy Senior Fellowship &amp; Fellowship (SFHEA / FHEA)</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* Dr. Ignacio Corradini */}
-            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-8 space-y-4 shadow-sm hover:border-emerald-300 hover:shadow-md transition-all">
-              <div className="flex items-center gap-4">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-600 to-cyan-700 text-white font-extrabold text-lg shadow-md">
-                  IC
+            {/* Right Column: Co-Founder Biographies with Expandable CV Details */}
+            <div className="lg:col-span-7 space-y-6">
+              {/* Dr. Marco Duz Card */}
+              <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-6 sm:p-7 space-y-4 shadow-sm hover:border-emerald-300 transition-all">
+                <div className="flex items-start gap-4">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 text-white font-extrabold text-lg shadow-md">
+                    MD
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center justify-between gap-1">
+                      <h3 className="text-xl font-bold text-slate-900">Dr. Marco Duz</h3>
+                      <span className="text-[11px] font-semibold text-emerald-800 bg-emerald-100/70 px-2 py-0.5 rounded-full border border-emerald-200">
+                        Co-Founder &amp; Clinical Lead
+                      </span>
+                    </div>
+                    <p className="text-xs text-emerald-800 font-mono font-bold mt-0.5">
+                      MedVet MVM(Res) DipECEIM PhD SFHEA MRCVS
+                    </p>
+                    <p className="text-xs text-slate-600 font-medium">
+                      Clinical Associate Professor in Equine Internal Medicine
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-slate-900">Dr. Ignacio Corradini</h3>
-                  <p className="text-xs text-emerald-800 font-mono font-bold">
-                    MV MSc FHEA EBVS DipECEIM MRCVS
-                  </p>
-                  <p className="text-xs text-slate-600 font-medium">Co-Founder &amp; AI Educational Strategy</p>
-                </div>
+
+                <p className="text-sm text-slate-700 leading-relaxed">
+                  Clinical Associate Professor at the University of Nottingham. Diplomate of the European College of Equine Internal Medicine (ECEIM), Senior Fellow of the Higher Education Academy (SFHEA), and Treasurer of the ECEIM Executive Committee, with over 20 years of clinical and university educational experience worldwide.
+                </p>
+
+                {/* Expandable CV Button */}
+                <button
+                  type="button"
+                  onClick={() => setExpandedMarco((prev) => !prev)}
+                  className="w-full flex items-center justify-between gap-2 px-4 py-2.5 rounded-xl bg-emerald-50/80 hover:bg-emerald-100/80 border border-emerald-200 text-xs font-semibold text-emerald-900 transition-colors"
+                  aria-expanded={expandedMarco}
+                >
+                  <span className="flex items-center gap-2">
+                    <GraduationCap className="h-4 w-4 text-emerald-700" />
+                    <span>{expandedMarco ? "Hide academic career details" : "View academic career & credentials"}</span>
+                  </span>
+                  <ChevronDown
+                    className={`h-4 w-4 text-emerald-700 transition-transform duration-200 ${
+                      expandedMarco ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {/* Expanded CV Drawer */}
+                {expandedMarco && (
+                  <div className="pt-2 border-t border-emerald-100 space-y-3 text-xs text-slate-700 animate-in fade-in slide-in-from-top-1 duration-200">
+                    <div className="space-y-1">
+                      <span className="font-bold text-slate-900 flex items-center gap-1.5">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
+                        Academic &amp; Clinical Appointment:
+                      </span>
+                      <p className="text-slate-600 pl-3 leading-relaxed">
+                        Clinical Associate Professor in Equine Internal Medicine, School of Veterinary Medicine and Science, University of Nottingham. Leading undergraduate and postgraduate clinical teaching, patient consultations, and rotation-based clinical decision-making.
+                      </p>
+                    </div>
+
+                    <div className="space-y-1">
+                      <span className="font-bold text-slate-900 flex items-center gap-1.5">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
+                        Specialist Qualifications &amp; Royal College:
+                      </span>
+                      <p className="text-slate-600 pl-3 leading-relaxed">
+                        EBVS® European Veterinary Specialist in Equine Internal Medicine (Diplomate ECEIM). Member of the Royal College of Veterinary Surgeons (MRCVS).
+                      </p>
+                    </div>
+
+                    <div className="space-y-1">
+                      <span className="font-bold text-slate-900 flex items-center gap-1.5">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
+                        Educational Leadership &amp; Fellowships:
+                      </span>
+                      <p className="text-slate-600 pl-3 leading-relaxed">
+                        Senior Fellow of the Higher Education Academy (SFHEA). Recognised for sustained institutional contribution to high-impact veterinary teaching, curriculum enhancement, and educator mentorship.
+                      </p>
+                    </div>
+
+                    <div className="space-y-1">
+                      <span className="font-bold text-slate-900 flex items-center gap-1.5">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
+                        International College Governance:
+                      </span>
+                      <p className="text-slate-600 pl-3 leading-relaxed">
+                        Treasurer and elected Executive Board Committee Member of the European College of Equine Internal Medicine (ECEIM).
+                      </p>
+                    </div>
+
+                    <div className="space-y-1">
+                      <span className="font-bold text-slate-900 flex items-center gap-1.5">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
+                        Research &amp; Scholarly Interests:
+                      </span>
+                      <p className="text-slate-600 pl-3 leading-relaxed">
+                        Clinical audit, evidence-based equine medicine, simulation-supported clinical education, and validated rubrics for communication training in demanding clinical practice.
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
-              <p className="text-sm text-slate-700 leading-relaxed">
-                Clinical Assistant Professor in Equine Internal Medicine and European Specialist (EBVS DipECEIM). Chair of the Digital Learning Group at the University of Nottingham&apos;s School of Veterinary Medicine and Science, pioneering AI integration and patient-side clinical reasoning within modern curricula.
-              </p>
+
+              {/* Dr. Ignacio Corradini Card */}
+              <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-6 sm:p-7 space-y-4 shadow-sm hover:border-emerald-300 transition-all">
+                <div className="flex items-start gap-4">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-600 to-cyan-700 text-white font-extrabold text-lg shadow-md">
+                    IC
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center justify-between gap-1">
+                      <h3 className="text-xl font-bold text-slate-900">Dr. Ignacio Corradini</h3>
+                      <span className="text-[11px] font-semibold text-emerald-800 bg-emerald-100/70 px-2 py-0.5 rounded-full border border-emerald-200">
+                        Co-Founder &amp; AI Educational Strategy
+                      </span>
+                    </div>
+                    <p className="text-xs text-emerald-800 font-mono font-bold mt-0.5">
+                      MV MSc FHEA EBVS DipECEIM MRCVS
+                    </p>
+                    <p className="text-xs text-slate-600 font-medium">
+                      Clinical Assistant Professor in Equine Internal Medicine
+                    </p>
+                  </div>
+                </div>
+
+                <p className="text-sm text-slate-700 leading-relaxed">
+                  Clinical Assistant Professor in Equine Internal Medicine and European Specialist (EBVS DipECEIM). Chair of the Digital Learning Group at the University of Nottingham&apos;s School of Veterinary Medicine and Science, pioneering AI integration and patient-side clinical reasoning within modern curricula.
+                </p>
+
+                {/* Expandable CV Button */}
+                <button
+                  type="button"
+                  onClick={() => setExpandedIgnacio((prev) => !prev)}
+                  className="w-full flex items-center justify-between gap-2 px-4 py-2.5 rounded-xl bg-emerald-50/80 hover:bg-emerald-100/80 border border-emerald-200 text-xs font-semibold text-emerald-900 transition-colors"
+                  aria-expanded={expandedIgnacio}
+                >
+                  <span className="flex items-center gap-2">
+                    <GraduationCap className="h-4 w-4 text-emerald-700" />
+                    <span>{expandedIgnacio ? "Hide academic career details" : "View academic career & credentials"}</span>
+                  </span>
+                  <ChevronDown
+                    className={`h-4 w-4 text-emerald-700 transition-transform duration-200 ${
+                      expandedIgnacio ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {/* Expanded CV Drawer */}
+                {expandedIgnacio && (
+                  <div className="pt-2 border-t border-emerald-100 space-y-3 text-xs text-slate-700 animate-in fade-in slide-in-from-top-1 duration-200">
+                    <div className="space-y-1">
+                      <span className="font-bold text-slate-900 flex items-center gap-1.5">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
+                        Academic &amp; Clinical Appointment:
+                      </span>
+                      <p className="text-slate-600 pl-3 leading-relaxed">
+                        Clinical Assistant Professor in Equine Internal Medicine, School of Veterinary Medicine and Science, University of Nottingham. Overseeing clinical caseloads, student bedside coaching, and clinical reasoning seminars.
+                      </p>
+                    </div>
+
+                    <div className="space-y-1">
+                      <span className="font-bold text-slate-900 flex items-center gap-1.5">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
+                        Specialist Qualifications &amp; Royal College:
+                      </span>
+                      <p className="text-slate-600 pl-3 leading-relaxed">
+                        EBVS® European Veterinary Specialist in Equine Internal Medicine (Diplomate ECEIM). Member of the Royal College of Veterinary Surgeons (MRCVS). Master of Science (MSc).
+                      </p>
+                    </div>
+
+                    <div className="space-y-1">
+                      <span className="font-bold text-slate-900 flex items-center gap-1.5">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
+                        Pedagogic Fellowship:
+                      </span>
+                      <p className="text-slate-600 pl-3 leading-relaxed">
+                        Fellow of the Higher Education Academy (FHEA), committed to experiential, inquiry-led clinical teaching and reflective veterinary practice.
+                      </p>
+                    </div>
+
+                    <div className="space-y-1">
+                      <span className="font-bold text-slate-900 flex items-center gap-1.5">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
+                        Institutional Digital Strategy:
+                      </span>
+                      <p className="text-slate-600 pl-3 leading-relaxed">
+                        Chair of the Digital Learning Group at the School of Veterinary Medicine and Science, leading pedagogical innovation, interactive technology integration, and AI curriculum strategy.
+                      </p>
+                    </div>
+
+                    <div className="space-y-1">
+                      <span className="font-bold text-slate-900 flex items-center gap-1.5">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
+                        AI Simulation &amp; Pedagogical Architecture:
+                      </span>
+                      <p className="text-slate-600 pl-3 leading-relaxed">
+                        Conception and pedagogical design of dynamic conversational personas, structured feedback frameworks, and AI-assisted clinical simulation that mirrors real-life client encounters.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
