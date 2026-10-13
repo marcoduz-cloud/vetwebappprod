@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "@/features/auth/services/authService";
@@ -34,6 +34,43 @@ export default function LandingPage() {
   const [whoWeAreDropdownOpen, setWhoWeAreDropdownOpen] = useState(false);
   const [mockupTab, setMockupTab] = useState<"video" | "dialogue">("video");
 
+  // Rotating hero message bubbles
+  const heroMessages = [
+    {
+      id: 1,
+      badge: "Clinical Simulation",
+      text: "The interactive simulation platform authored by board-certified veterinary specialists",
+      icon: Stethoscope,
+    },
+    {
+      id: 2,
+      badge: "Pedagogical Safety",
+      text: "AI is grounded to roleplay pet owners, veterinary nurses, and team members in a closed, safe, and academically rigorous environment.",
+      icon: ShieldCheck,
+    },
+    {
+      id: 3,
+      badge: "Core Competency",
+      text: "Practice communication skills and clinical reasoning in a safe environment",
+      icon: MessageSquare,
+    },
+    {
+      id: 4,
+      badge: "Educational Ethos",
+      text: "Use AI to enhance learning, not to substitute it!",
+      icon: Sparkles,
+    },
+  ];
+
+  const [activeMessageIndex, setActiveMessageIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveMessageIndex((prev) => (prev + 1) % heroMessages.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [heroMessages.length]);
+
   // Form state
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({
@@ -59,11 +96,11 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-emerald-500 selection:text-white font-sans antialiased">
+    <div className="min-h-screen bg-gradient-to-b from-[#f2fbf7] via-[#f7fdfa] to-[#eef9f4] text-slate-900 selection:bg-emerald-200 selection:text-emerald-950 font-sans">
       {/* ─────────────────────────────────────────────────────────────
-          STICKY TOP NAVIGATION
+          STICKY NAVIGATION BAR
       ────────────────────────────────────────────────────────────── */}
-      <header className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-md">
+      <header className="sticky top-0 z-50 w-full border-b border-emerald-100/80 bg-white/90 backdrop-blur-md shadow-xs">
         <div className="container mx-auto flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Brand Logo */}
           <Link href="/" className="flex items-center gap-3 group">
@@ -78,42 +115,41 @@ export default function LandingPage() {
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-bold tracking-tight text-white flex items-center gap-0.5">
-                Vew<span className="text-emerald-400">Ai</span>
+              <span className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-0.5">
+                Vew<span className="text-emerald-600 font-extrabold">Ai</span>
               </span>
-              <span className="text-[10px] font-medium uppercase tracking-wider text-slate-400">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-emerald-800/80">
                 Clinical Simulation
               </span>
             </div>
           </Link>
 
-          {/* Desktop Two-Tab Menu Navigation */}
-          <nav className="hidden md:flex items-center gap-3">
-            {/* Tab 1: Who We Are (Dropdown Menu) */}
-            <div
-              className="relative"
-              onMouseEnter={() => setWhoWeAreDropdownOpen(true)}
-              onMouseLeave={() => setWhoWeAreDropdownOpen(false)}
-            >
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-1.5 lg:gap-3">
+            {/* Tab 1: Who We Are (Dropdown) */}
+            <div className="relative">
               <button
                 type="button"
-                className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-slate-200 hover:text-white hover:bg-slate-900 rounded-lg transition-colors border border-transparent hover:border-slate-800"
+                onClick={() => setWhoWeAreDropdownOpen(!whoWeAreDropdownOpen)}
+                onBlur={() => setTimeout(() => setWhoWeAreDropdownOpen(false), 200)}
+                className="flex items-center gap-1 px-3 py-2 text-sm font-semibold text-slate-700 hover:text-emerald-700 transition-colors rounded-lg hover:bg-emerald-50/70"
               >
                 <span>Who We Are</span>
-                <ChevronDown className="h-4 w-4 text-slate-400 transition-transform duration-200" />
+                <ChevronDown
+                  className={`h-4 w-4 transition-transform duration-200 text-slate-500 ${
+                    whoWeAreDropdownOpen ? "rotate-180 text-emerald-600" : ""
+                  }`}
+                />
               </button>
 
               {whoWeAreDropdownOpen && (
-                <div className="absolute left-0 mt-1 w-64 rounded-xl border border-slate-800 bg-slate-900/95 p-2 shadow-2xl backdrop-blur-xl animate-in fade-in-50 slide-in-from-top-2">
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-3 py-1.5">
-                    Platform & Mission
-                  </div>
+                <div className="absolute left-0 mt-2 w-56 rounded-xl border border-emerald-100 bg-white p-2 shadow-xl shadow-emerald-950/10 z-50 animate-in fade-in-50 zoom-in-95">
                   {navLinks.map((item) => (
                     <a
                       key={item.name}
                       href={item.href}
                       onClick={() => setWhoWeAreDropdownOpen(false)}
-                      className="block rounded-lg px-3 py-2 text-sm font-medium text-slate-300 hover:bg-emerald-500/10 hover:text-emerald-400 transition-colors"
+                      className="block rounded-lg px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors"
                     >
                       {item.name}
                     </a>
@@ -122,34 +158,34 @@ export default function LandingPage() {
               )}
             </div>
 
-            {/* Direct Quick Links */}
+            {/* Direct Shortcut Nav Links */}
             <a
-              href="#solution"
-              className="px-3 py-2 text-sm font-medium text-slate-300 hover:text-white transition-colors"
+              href="#challenge"
+              className="px-3 py-2 text-sm font-medium text-slate-600 hover:text-emerald-700 transition-colors"
             >
-              Solution
+              The Challenge
             </a>
             <a
-              href="#insights"
-              className="px-3 py-2 text-sm font-medium text-slate-300 hover:text-white transition-colors"
+              href="#solution"
+              className="px-3 py-2 text-sm font-medium text-slate-600 hover:text-emerald-700 transition-colors"
             >
-              Educator Analytics
+              The Solution
             </a>
             <a
               href="#team"
-              className="px-3 py-2 text-sm font-medium text-slate-300 hover:text-white transition-colors"
+              className="px-3 py-2 text-sm font-medium text-slate-600 hover:text-emerald-700 transition-colors"
             >
               Team
             </a>
 
             {/* Vertical separator */}
-            <div className="h-5 w-px bg-slate-800 mx-2" />
+            <div className="h-5 w-px bg-emerald-200/80 mx-2" />
 
             {/* Tab 2: Platform Access (Sign in / Enter Dashboard) */}
             {user ? (
               <Link
                 href="/dashboard"
-                className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-400 shadow-md shadow-emerald-500/20 transition-all hover:shadow-emerald-500/30"
+                className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 shadow-sm shadow-emerald-600/25 transition-all"
               >
                 <span>Platform Access (Dashboard)</span>
                 <ArrowRight className="h-4 w-4" />
@@ -157,7 +193,7 @@ export default function LandingPage() {
             ) : (
               <Link
                 href="/login"
-                className="inline-flex items-center gap-2 rounded-lg border border-emerald-500/50 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-400 hover:bg-emerald-500 hover:text-slate-950 transition-all"
+                className="inline-flex items-center gap-2 rounded-xl border border-emerald-300 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-800 hover:bg-emerald-600 hover:text-white transition-all shadow-xs"
               >
                 <Lock className="h-3.5 w-3.5" />
                 <span>Platform Access</span>
@@ -166,7 +202,7 @@ export default function LandingPage() {
 
             <a
               href="#contact"
-              className="hidden lg:inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-slate-200 transition-colors shadow-sm"
+              className="hidden lg:inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 transition-colors shadow-sm"
             >
               <span>Register Interest</span>
             </a>
@@ -176,7 +212,7 @@ export default function LandingPage() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-slate-400 hover:text-white"
+            className="md:hidden p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-emerald-50"
             aria-label="Toggle Navigation"
           >
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -185,8 +221,8 @@ export default function LandingPage() {
 
         {/* Mobile Dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-b border-slate-800 bg-slate-950 px-4 py-4 space-y-3 animate-in fade-in-50">
-            <div className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+          <div className="md:hidden border-b border-emerald-100 bg-white px-4 py-4 space-y-3 animate-in fade-in-50 shadow-lg">
+            <div className="text-xs font-bold uppercase tracking-wider text-emerald-800">
               Who We Are
             </div>
             {navLinks.map((item) => (
@@ -194,23 +230,23 @@ export default function LandingPage() {
                 key={item.name}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="block py-1.5 text-base font-medium text-slate-300 hover:text-emerald-400"
+                className="block py-1.5 text-base font-medium text-slate-700 hover:text-emerald-700"
               >
                 {item.name}
               </a>
             ))}
-            <div className="pt-2 border-t border-slate-800 flex flex-col gap-2">
+            <div className="pt-2 border-t border-emerald-100 flex flex-col gap-2">
               <Link
                 href={user ? "/dashboard" : "/login"}
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center rounded-lg bg-emerald-500 py-2.5 text-sm font-semibold text-slate-950 hover:bg-emerald-400"
+                className="w-full text-center rounded-xl bg-emerald-600 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 shadow-sm"
               >
                 {user ? "Enter Platform Dashboard" : "Platform Access (Log In)"}
               </Link>
               <a
                 href="#contact"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center rounded-lg border border-slate-700 py-2.5 text-sm font-semibold text-white hover:bg-slate-900"
+                className="w-full text-center rounded-xl border border-slate-300 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-100"
               >
                 Register Interest
               </a>
@@ -220,46 +256,89 @@ export default function LandingPage() {
       </header>
 
       {/* ─────────────────────────────────────────────────────────────
-          HERO SECTION
+          HERO SECTION (Light Mint & Emerald Theme)
       ────────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28">
-        {/* Subtle background glow */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-emerald-600/10 blur-[130px] rounded-full pointer-events-none" />
+      <section className="relative overflow-hidden pt-12 pb-18 md:pt-20 md:pb-24">
+        {/* Subtle mint/emerald ambient glow */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-emerald-300/25 blur-[140px] rounded-full pointer-events-none" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center space-y-6">
             {/* Status Pill Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs sm:text-sm font-medium text-emerald-300 shadow-sm">
-              <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-300/80 bg-white/80 px-4 py-1.5 text-xs sm:text-sm font-semibold text-emerald-800 shadow-sm backdrop-blur-sm">
+              <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
               <span>In Pilot Testing with UK Veterinary Students · Developed by Clinical Faculty</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
               Master Clinical Communication <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-600">
                 Before Stepping into Practice.
               </span>
             </h1>
 
-            {/* Subheading */}
-            <p className="max-w-2xl mx-auto text-lg sm:text-xl text-slate-300 leading-relaxed">
-              An interactive simulation platform authored by board-certified veterinary specialists. We use calibrated AI to roleplay pet owners, veterinary nurses, and team members in a closed, safe, and academically rigorous environment.
-            </p>
+            {/* ─────────────────────────────────────────────────────────
+                DYNAMIC SWAPPING MESSAGE BUBBLES
+            ────────────────────────────────────────────────────────── */}
+            <div className="max-w-2xl mx-auto pt-2">
+              {/* Active animated bubble */}
+              <div className="relative min-h-[110px] flex items-center justify-center p-5 rounded-2xl border border-emerald-200/90 bg-white/95 shadow-lg shadow-emerald-900/5 backdrop-blur-md transition-all duration-300">
+                <div
+                  key={activeMessageIndex}
+                  className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3.5 animate-in fade-in-50 slide-in-from-bottom-2 duration-300"
+                >
+                  <div className="h-11 w-11 shrink-0 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shadow-xs">
+                    {React.createElement(heroMessages[activeMessageIndex].icon, { className: "h-5 w-5" })}
+                  </div>
+                  <div>
+                    <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md mb-1">
+                      {heroMessages[activeMessageIndex].badge}
+                    </span>
+                    <p className="text-base sm:text-lg font-semibold text-slate-800 leading-snug">
+                      &ldquo;{heroMessages[activeMessageIndex].text}&rdquo;
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Interactive bubble selector pills */}
+              <div className="flex flex-wrap items-center justify-center gap-2 mt-3.5">
+                {heroMessages.map((msg, idx) => (
+                  <button
+                    key={msg.id}
+                    type="button"
+                    onClick={() => setActiveMessageIndex(idx)}
+                    className={`px-3 py-1 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
+                      idx === activeMessageIndex
+                        ? "bg-emerald-600 text-white shadow-xs scale-105"
+                        : "bg-white/90 text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 border border-emerald-200/80 shadow-2xs"
+                    }`}
+                  >
+                    <span
+                      className={`h-1.5 w-1.5 rounded-full ${
+                        idx === activeMessageIndex ? "bg-white animate-pulse" : "bg-emerald-500"
+                      }`}
+                    />
+                    <span>{msg.badge}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
 
             {/* CTAs */}
             <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
               <a
                 href="#contact"
-                className="rounded-xl bg-emerald-500 px-6 py-3.5 text-base font-semibold text-slate-950 hover:bg-emerald-400 transition-all shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5"
+                className="rounded-xl bg-emerald-600 px-6 py-3.5 text-base font-semibold text-white hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-600/25 hover:shadow-emerald-600/40 hover:-translate-y-0.5 cursor-pointer"
               >
                 Register Your School&apos;s Interest
               </a>
               <Link
                 href={user ? "/dashboard" : "/login"}
-                className="rounded-xl border border-slate-700 bg-slate-900/80 px-6 py-3.5 text-base font-semibold text-white hover:bg-slate-800 hover:border-slate-600 transition-all hover:-translate-y-0.5 flex items-center gap-2"
+                className="rounded-xl border border-emerald-300 bg-white px-6 py-3.5 text-base font-semibold text-emerald-800 hover:bg-emerald-50 hover:border-emerald-400 transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-xs"
               >
-                <Lock className="h-4 w-4 text-emerald-400" />
+                <Lock className="h-4 w-4 text-emerald-600" />
                 <span>{user ? "Enter Dashboard" : "Platform Access"}</span>
               </Link>
             </div>
@@ -267,23 +346,23 @@ export default function LandingPage() {
 
           {/* Interactive Consult Simulator Mockup */}
           <div className="mt-14 max-w-4xl mx-auto">
-            <div className="relative rounded-2xl border border-slate-800 bg-slate-900/90 shadow-2xl shadow-emerald-950/30 overflow-hidden backdrop-blur-xl">
+            <div className="relative rounded-2xl border border-emerald-200/90 bg-white shadow-2xl shadow-emerald-950/10 overflow-hidden backdrop-blur-xl">
               {/* Mockup Header Bar with Switchable Views */}
-              <div className="flex flex-wrap items-center justify-between border-b border-slate-800 px-4 sm:px-6 py-3 bg-slate-950/80 gap-3">
+              <div className="flex flex-wrap items-center justify-between border-b border-emerald-100 px-4 sm:px-6 py-3 bg-emerald-50/70 gap-3">
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-1.5 mr-2">
-                    <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/80" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-green-500/80" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
                   </div>
-                  <div className="flex items-center bg-slate-900 rounded-lg p-0.5 border border-slate-800 text-xs">
+                  <div className="flex items-center bg-white rounded-lg p-0.5 border border-emerald-200/80 text-xs shadow-2xs">
                     <button
                       type="button"
                       onClick={() => setMockupTab("video")}
-                      className={`px-3 py-1 rounded-md font-medium transition-colors flex items-center gap-1.5 ${
+                      className={`px-3 py-1 rounded-md font-semibold transition-colors flex items-center gap-1.5 cursor-pointer ${
                         mockupTab === "video"
-                          ? "bg-emerald-500 text-slate-950 shadow-sm"
-                          : "text-slate-400 hover:text-white"
+                          ? "bg-emerald-600 text-white shadow-2xs"
+                          : "text-slate-600 hover:text-slate-900"
                       }`}
                     >
                       <Play className="h-3 w-3 fill-current" />
@@ -292,10 +371,10 @@ export default function LandingPage() {
                     <button
                       type="button"
                       onClick={() => setMockupTab("dialogue")}
-                      className={`px-3 py-1 rounded-md font-medium transition-colors flex items-center gap-1.5 ${
+                      className={`px-3 py-1 rounded-md font-semibold transition-colors flex items-center gap-1.5 cursor-pointer ${
                         mockupTab === "dialogue"
-                          ? "bg-emerald-500 text-slate-950 shadow-sm"
-                          : "text-slate-400 hover:text-white"
+                          ? "bg-emerald-600 text-white shadow-2xs"
+                          : "text-slate-600 hover:text-slate-900"
                       }`}
                     >
                       <MessageSquare className="h-3 w-3" />
@@ -305,8 +384,8 @@ export default function LandingPage() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-md bg-emerald-500/15 px-2.5 py-0.5 text-xs font-medium text-emerald-400 border border-emerald-500/20">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="inline-flex items-center gap-1.5 rounded-md bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 border border-emerald-300">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-600 animate-pulse" />
                     Equine Colic Case #04
                   </span>
                 </div>
@@ -323,138 +402,138 @@ export default function LandingPage() {
                     playsInline
                     className="w-full h-auto aspect-video object-cover"
                   />
-                  <div className="p-4 bg-slate-900/90 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                  <div className="p-3.5 bg-white border-t border-emerald-100 flex items-center justify-between text-xs text-slate-600">
                     <span>Authentic recording from the VewAI clinical simulator environment</span>
                     <button
                       type="button"
                       onClick={() => setMockupTab("dialogue")}
-                      className="text-emerald-400 hover:underline font-medium"
+                      className="text-emerald-700 hover:underline font-semibold cursor-pointer"
                     >
                       Inspect dialogue analysis →
                     </button>
                   </div>
                 </div>
               ) : (
-                <div className="p-6 md:p-8 space-y-6">
-                {/* Dialogue 1: The AI Pet / Horse Owner */}
-                <div className="flex items-start gap-4">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber-500 to-orange-600 text-white font-bold text-sm shadow-md">
-                    SO
-                  </div>
-                  <div className="space-y-1.5 max-w-xl">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-semibold text-amber-400">
-                        Sarah (Barnaby&apos;s Owner)
-                      </span>
-                      <span className="text-[10px] text-slate-400">Anxious & Distressed</span>
+                <div className="p-6 md:p-8 space-y-6 bg-white">
+                  {/* Dialogue 1: The AI Pet / Horse Owner */}
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber-500 to-orange-600 text-white font-bold text-sm shadow-md">
+                      SO
                     </div>
-                    <div className="rounded-2xl rounded-tl-none bg-slate-800/80 p-4 text-sm text-slate-100 border border-slate-700/60 leading-relaxed shadow-sm">
-                      &ldquo;Doctor, Barnaby hasn&apos;t eaten since yesterday afternoon and he kept rolling in the paddock. When I checked him this morning he broke out into a sweat. I&apos;m terrified... is he going to need surgery?&rdquo;
+                    <div className="space-y-1.5 max-w-xl">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-bold text-amber-800">
+                          Sarah (Barnaby&apos;s Owner)
+                        </span>
+                        <span className="text-[10px] text-slate-500">Anxious & Distressed</span>
+                      </div>
+                      <div className="rounded-2xl rounded-tl-none bg-amber-50/80 p-4 text-sm text-slate-900 border border-amber-200/80 leading-relaxed shadow-2xs">
+                        &ldquo;Doctor, Barnaby hasn&apos;t eaten since yesterday afternoon and he kept rolling in the paddock. When I checked him this morning he broke out into a sweat. I&apos;m terrified... is he going to need surgery?&rdquo;
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Dialogue 2: The Veterinary Student */}
-                <div className="flex items-start gap-4 flex-row-reverse">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white font-bold text-sm shadow-md">
-                    VS
-                  </div>
-                  <div className="space-y-1.5 max-w-xl text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <span className="text-xs font-semibold text-emerald-400">
-                        Veterinary Student
-                      </span>
-                      <span className="text-[10px] text-slate-400">Voice Input Active</span>
+                  {/* Dialogue 2: The Veterinary Student */}
+                  <div className="flex items-start gap-4 flex-row-reverse">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white font-bold text-sm shadow-md">
+                      VS
                     </div>
-                    <div className="rounded-2xl rounded-tr-none bg-emerald-950/60 border border-emerald-500/40 p-4 text-sm text-emerald-100 text-left leading-relaxed shadow-sm">
-                      &ldquo;I completely understand how alarming this is, Sarah. Let&apos;s take a deep breath together. I will examine Barnaby right now to assess his heart rate, gut sounds, and pain level, and I&apos;ll explain every step to you before we make any decisions.&rdquo;
+                    <div className="space-y-1.5 max-w-xl text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        <span className="text-xs font-bold text-emerald-800">
+                          Veterinary Student
+                        </span>
+                        <span className="text-[10px] text-slate-500">Voice Input Active</span>
+                      </div>
+                      <div className="rounded-2xl rounded-tr-none bg-emerald-50 border border-emerald-300 p-4 text-sm text-slate-900 text-left leading-relaxed shadow-2xs">
+                        &ldquo;I completely understand how alarming this is, Sarah. Let&apos;s take a deep breath together. I will examine Barnaby right now to assess his heart rate, gut sounds, and pain level, and I&apos;ll explain every step to you before we make any decisions.&rdquo;
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Real-time Pedagogical Evaluation Box */}
-                <div className="rounded-xl border border-emerald-500/30 bg-emerald-950/30 p-4 md:p-5 mt-4">
-                  <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
-                    <div className="flex items-center gap-2">
-                      <BrainCircuit className="h-4 w-4 text-emerald-400" />
-                      <span className="text-xs font-bold uppercase tracking-wider text-emerald-300">
-                        Immediate Pedagogical Assessment · Calgary-Cambridge Framework
+                  {/* Real-time Pedagogical Evaluation Box */}
+                  <div className="rounded-xl border border-emerald-200 bg-emerald-50/70 p-4 md:p-5 mt-4">
+                    <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
+                      <div className="flex items-center gap-2">
+                        <BrainCircuit className="h-4 w-4 text-emerald-700" />
+                        <span className="text-xs font-bold uppercase tracking-wider text-emerald-900">
+                          Immediate Pedagogical Assessment · Calgary-Cambridge Framework
+                        </span>
+                      </div>
+                      <span className="text-xs font-bold text-emerald-800 bg-emerald-200/70 px-2 py-0.5 rounded">
+                        Empathy Score: Exemplary
                       </span>
                     </div>
-                    <span className="text-xs font-semibold text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded">
-                      Empathy Score: Exemplary
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                    <div className="rounded-lg bg-slate-900/80 p-3 border border-slate-800">
-                      <div className="font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-                        Active Listening
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                      <div className="rounded-lg bg-white p-3 border border-emerald-100 shadow-2xs">
+                        <div className="font-bold text-slate-900 mb-1 flex items-center gap-1.5">
+                          <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+                          Active Listening
+                        </div>
+                        <p className="text-slate-600">
+                          Successfully acknowledged owner anxiety before requesting physical exam details.
+                        </p>
                       </div>
-                      <p className="text-slate-400">
-                        Successfully acknowledged owner anxiety before requesting physical exam details.
-                      </p>
-                    </div>
-                    <div className="rounded-lg bg-slate-900/80 p-3 border border-slate-800">
-                      <div className="font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-                        Diagnostic Pathway
+                      <div className="rounded-lg bg-white p-3 border border-emerald-100 shadow-2xs">
+                        <div className="font-bold text-slate-900 mb-1 flex items-center gap-1.5">
+                          <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+                          Diagnostic Pathway
+                        </div>
+                        <p className="text-slate-600">
+                          Appropriately prioritized vital signs and pain score evaluation for colic triage.
+                        </p>
                       </div>
-                      <p className="text-slate-400">
-                        Appropriately prioritized vital signs and pain score evaluation for colic triage.
-                      </p>
-                    </div>
-                    <div className="rounded-lg bg-slate-900/80 p-3 border border-slate-800">
-                      <div className="font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-                        Transparency
+                      <div className="rounded-lg bg-white p-3 border border-emerald-100 shadow-2xs">
+                        <div className="font-bold text-slate-900 mb-1 flex items-center gap-1.5">
+                          <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+                          Transparency
+                        </div>
+                        <p className="text-slate-600">
+                          Reassured the client by setting clear expectations and collaborative consent.
+                        </p>
                       </div>
-                      <p className="text-slate-400">
-                        Reassured the client by setting clear expectations and collaborative consent.
-                      </p>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
-        </div>
         </div>
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
           SECTION 1: THE URGENT NEED (80% COMMUNICATION CRISIS)
       ────────────────────────────────────────────────────────────── */}
-      <section id="challenge" className="py-20 border-t border-slate-800/80 bg-slate-900/50">
+      <section id="challenge" className="py-20 border-t border-emerald-100/90 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
               The Reality of Veterinary Practice
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               Why Communication Skills Are the Make-or-Break Competency
             </h2>
-            <p className="text-slate-400 text-base sm:text-lg">
+            <p className="text-slate-600 text-base sm:text-lg">
               Veterinary school prepares students extensively in pathology, pharmacology, and surgery. But when new graduates enter clinics, their greatest challenge isn&apos;t knowing the medicine—it&apos;s communicating with the client.
             </p>
           </div>
 
           {/* Stat Banner */}
-          <div className="max-w-4xl mx-auto rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-950/40 via-slate-900 to-slate-900 p-8 md:p-10 shadow-xl mb-12">
+          <div className="max-w-4xl mx-auto rounded-2xl border border-amber-300 bg-gradient-to-br from-amber-50/90 via-white to-amber-50/60 p-8 md:p-10 shadow-lg shadow-amber-900/5 mb-12">
             <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="text-center md:text-left shrink-0">
-                <div className="text-6xl sm:text-7xl font-extrabold text-amber-400 tracking-tight">
+                <div className="text-6xl sm:text-7xl font-extrabold text-amber-600 tracking-tight">
                   80%
                 </div>
-                <div className="text-xs font-bold uppercase tracking-wider text-amber-300/80 mt-1">
+                <div className="text-xs font-bold uppercase tracking-wider text-amber-800 mt-1">
                   Of Investigated Cases
                 </div>
               </div>
-              <div className="space-y-3 border-t md:border-t-0 md:border-l border-slate-800 pt-6 md:pt-0 md:pl-8">
-                <h3 className="text-xl font-bold text-white">
+              <div className="space-y-3 border-t md:border-t-0 md:border-l border-amber-200 pt-6 md:pt-0 md:pl-8">
+                <h3 className="text-xl font-bold text-slate-900">
                   Communication problems are a contributing factor in 80% of veterinary negligence and complaint cases.
                 </h3>
-                <p className="text-sm text-slate-300 leading-relaxed">
+                <p className="text-sm text-slate-700 leading-relaxed">
                   Published research analyzing settled veterinary malpractice cases revealed that breakdown in communication—between clinicians and animal owners, as well as within clinical teams—is the predominant driver of complaints.
                 </p>
                 <div className="pt-1">
@@ -462,7 +541,7 @@ export default function LandingPage() {
                     href="https://doi.org/10.1002/vetr.1068"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-400 hover:text-emerald-300 hover:underline"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 hover:underline"
                   >
                     <span>
                       Russell, Mossop, Forbes, &amp; Oxtoby (2022) · Veterinary Record
@@ -476,32 +555,32 @@ export default function LandingPage() {
 
           {/* 3 Core Challenges */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="rounded-xl border border-slate-800 bg-slate-950/80 p-6 space-y-3">
-              <div className="h-10 w-10 rounded-lg bg-red-500/10 flex items-center justify-center text-red-400">
+            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-6 space-y-3 shadow-2xs hover:border-emerald-300 hover:shadow-md transition-all">
+              <div className="h-10 w-10 rounded-xl bg-red-100 flex items-center justify-center text-red-600">
                 <AlertTriangle className="h-5 w-5" />
               </div>
-              <h4 className="text-lg font-bold text-white">The Actor Simulation Bottleneck</h4>
-              <p className="text-sm text-slate-400 leading-relaxed">
+              <h4 className="text-lg font-bold text-slate-900">The Actor Simulation Bottleneck</h4>
+              <p className="text-sm text-slate-600 leading-relaxed">
                 Actor-based roleplay is difficult to coordinate and prohibitively expensive. As a result, students typically get only 10–15 minutes of live client practice per term.
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-950/80 p-6 space-y-3">
-              <div className="h-10 w-10 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400">
+            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-6 space-y-3 shadow-2xs hover:border-emerald-300 hover:shadow-md transition-all">
+              <div className="h-10 w-10 rounded-xl bg-amber-100 flex items-center justify-center text-amber-700">
                 <HeartHandshake className="h-5 w-5" />
               </div>
-              <h4 className="text-lg font-bold text-white">High-Stakes Emotional Pressure</h4>
-              <p className="text-sm text-slate-400 leading-relaxed">
+              <h4 className="text-lg font-bold text-slate-900">High-Stakes Emotional Pressure</h4>
+              <p className="text-sm text-slate-600 leading-relaxed">
                 Breaking bad news, discussing sudden euthanasia, and negotiating financial constraints require seasoned emotional intelligence that textbook study cannot build.
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-950/80 p-6 space-y-3">
-              <div className="h-10 w-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-6 space-y-3 shadow-2xs hover:border-emerald-300 hover:shadow-md transition-all">
+              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <Stethoscope className="h-5 w-5" />
               </div>
-              <h4 className="text-lg font-bold text-white">Clinical Reasoning in Action</h4>
-              <p className="text-sm text-slate-400 leading-relaxed">
+              <h4 className="text-lg font-bold text-slate-900">Clinical Reasoning in Action</h4>
+              <p className="text-sm text-slate-600 leading-relaxed">
                 Students need to synthesize symptoms, diagnostic tests, and owner constraints in real time—without fear of causing harm to a live animal.
               </p>
             </div>
@@ -512,61 +591,61 @@ export default function LandingPage() {
       {/* ─────────────────────────────────────────────────────────────
           SECTION 2: THE SOLUTION (CLOSED, SPECIALIST-AUTHORED AI)
       ────────────────────────────────────────────────────────────── */}
-      <section id="solution" className="py-20 border-t border-slate-800/80 bg-slate-950">
+      <section id="solution" className="py-20 border-t border-emerald-100/90 bg-[#f4fbf7]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-white px-3 py-1 rounded-full border border-emerald-200">
               The VewAI Solution
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               A Closed, Safe Simulation Environment for Veterinary Education
             </h2>
-            <p className="text-slate-400 text-base sm:text-lg">
+            <p className="text-slate-600 text-base sm:text-lg">
               We leverage purpose-trained artificial intelligence to roleplay animal owners, nurses, and clinical colleagues. Every scenario operates within strict pedagogical guardrails authored and verified by board-certified veterinary specialists.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {/* Feature 1 */}
-            <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-6 space-y-3 hover:border-emerald-500/40 transition-all hover:-translate-y-1">
-              <div className="h-10 w-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+            <div className="rounded-2xl border border-emerald-100 bg-white p-6 space-y-3 hover:border-emerald-300 hover:shadow-md transition-all hover:-translate-y-1 shadow-2xs">
+              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <ShieldCheck className="h-5 w-5" />
               </div>
-              <h3 className="text-base font-bold text-white">Specialist-Authored Cases</h3>
-              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+              <h3 className="text-base font-bold text-slate-900">Specialist-Authored Cases</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 No unconstrained AI hallucinations. All patient histories, laboratory findings, and diagnostic branches are meticulously crafted by European Specialists.
               </p>
             </div>
 
             {/* Feature 2 */}
-            <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-6 space-y-3 hover:border-emerald-500/40 transition-all hover:-translate-y-1">
-              <div className="h-10 w-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+            <div className="rounded-2xl border border-emerald-100 bg-white p-6 space-y-3 hover:border-emerald-300 hover:shadow-md transition-all hover:-translate-y-1 shadow-2xs">
+              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <Users className="h-5 w-5" />
               </div>
-              <h3 className="text-base font-bold text-white">Dynamic Roleplay Personas</h3>
-              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+              <h3 className="text-base font-bold text-slate-900">Dynamic Roleplay Personas</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 Interact with angry, anxious, or budget-limited owners. Consult with veterinary nurses and technicians to mirror authentic clinical workflow.
               </p>
             </div>
 
             {/* Feature 3 */}
-            <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-6 space-y-3 hover:border-emerald-500/40 transition-all hover:-translate-y-1">
-              <div className="h-10 w-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+            <div className="rounded-2xl border border-emerald-100 bg-white p-6 space-y-3 hover:border-emerald-300 hover:shadow-md transition-all hover:-translate-y-1 shadow-2xs">
+              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <Mic className="h-5 w-5" />
               </div>
-              <h3 className="text-base font-bold text-white">Voice &amp; Avatar Immersion</h3>
-              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+              <h3 className="text-base font-bold text-slate-900">Voice &amp; Avatar Immersion</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 Students practice verbal communication using live voice input. The AI responds with expressive avatars, replicating the pressure of face-to-face consults.
               </p>
             </div>
 
             {/* Feature 4 */}
-            <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-6 space-y-3 hover:border-emerald-500/40 transition-all hover:-translate-y-1">
-              <div className="h-10 w-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+            <div className="rounded-2xl border border-emerald-100 bg-white p-6 space-y-3 hover:border-emerald-300 hover:shadow-md transition-all hover:-translate-y-1 shadow-2xs">
+              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <Sparkles className="h-5 w-5" />
               </div>
-              <h3 className="text-base font-bold text-white">Unlimited Safe Practice</h3>
-              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+              <h3 className="text-base font-bold text-slate-900">Unlimited Safe Practice</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 Students can practice cases 24/7 at their own pace. Mistakes become formative learning opportunities rather than real-world malpractice risks.
               </p>
             </div>
@@ -577,83 +656,83 @@ export default function LandingPage() {
       {/* ─────────────────────────────────────────────────────────────
           SECTION 3: EDUCATOR INSIGHTS & COHORT PROGRESSION
       ────────────────────────────────────────────────────────────── */}
-      <section id="insights" className="py-20 border-t border-slate-800/80 bg-slate-900/40">
+      <section id="insights" className="py-20 border-t border-emerald-100/90 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
               Dual-Level Pedagogical Feedback
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               Actionable Feedback for Students. <br />
               Cohort-Level Intelligence for Educators.
             </h2>
-            <p className="text-slate-400 text-base sm:text-lg">
+            <p className="text-slate-600 text-base sm:text-lg">
               VewAI doesn&apos;t just score consultations—it bridges the gap between individual practice and classroom teaching.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {/* Student Feedback Card */}
-            <div className="rounded-2xl border border-slate-800 bg-slate-950 p-8 space-y-5">
+            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-8 space-y-5 shadow-sm">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-xl bg-emerald-500/15 flex items-center justify-center text-emerald-400">
+                <div className="h-11 w-11 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700 shadow-2xs">
                   <GraduationCap className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">For the Veterinary Student</h3>
-                  <p className="text-xs text-slate-400">Immediate Consultation Debrief</p>
+                  <h3 className="text-xl font-bold text-slate-900">For the Veterinary Student</h3>
+                  <p className="text-xs text-emerald-800 font-semibold">Immediate Consultation Debrief</p>
                 </div>
               </div>
-              <ul className="space-y-3.5 text-sm text-slate-300">
+              <ul className="space-y-3.5 text-sm text-slate-700">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
                   <span>
-                    <strong>Calgary-Cambridge Scoring:</strong> Objective assessment of rapport building, active listening, and information gathering.
+                    <strong className="text-slate-900">Calgary-Cambridge Scoring:</strong> Objective assessment of rapport building, active listening, and information gathering.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
                   <span>
-                    <strong>Clinical Reasoning Breakdown:</strong> Review whether the diagnostic differential diagnosis matched the physiological signs revealed.
+                    <strong className="text-slate-900">Clinical Reasoning Breakdown:</strong> Review whether the diagnostic differential diagnosis matched the physiological signs revealed.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
                   <span>
-                    <strong>Personalized Action Points:</strong> Specific suggestions on phrasing, pacing, and emotional de-escalation before the next attempt.
+                    <strong className="text-slate-900">Personalized Action Points:</strong> Specific suggestions on phrasing, pacing, and emotional de-escalation before the next attempt.
                   </span>
                 </li>
               </ul>
             </div>
 
             {/* Educator Analytics Card */}
-            <div className="rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-950/20 to-slate-950 p-8 space-y-5 shadow-lg">
+            <div className="rounded-2xl border border-emerald-200/90 bg-gradient-to-br from-emerald-50 via-white to-teal-50/50 p-8 space-y-5 shadow-md shadow-emerald-900/5">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                <div className="h-11 w-11 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-xs">
                   <BarChart3 className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">For Veterinary Educators</h3>
-                  <p className="text-xs text-emerald-400 font-medium">Cohort &amp; Curriculum Intelligence</p>
+                  <h3 className="text-xl font-bold text-slate-900">For Veterinary Educators</h3>
+                  <p className="text-xs text-emerald-800 font-bold">Cohort &amp; Curriculum Intelligence</p>
                 </div>
               </div>
-              <ul className="space-y-3.5 text-sm text-slate-300">
+              <ul className="space-y-3.5 text-sm text-slate-700">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
                   <span>
-                    <strong>Cohort Progress Monitoring:</strong> Track overall class performance trends across communication domains and species categories.
+                    <strong className="text-slate-900">Cohort Progress Monitoring:</strong> Track overall class performance trends across communication domains and species categories.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
                   <span>
-                    <strong>Highlighting Knowledge Gaps:</strong> Automatically flags specific Learning Objectives (LOs) where multiple students struggle.
+                    <strong className="text-slate-900">Highlighting Knowledge Gaps:</strong> Automatically flags specific Learning Objectives (LOs) where multiple students struggle.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
                   <span>
-                    <strong>Targeted Teaching Reinforcement:</strong> Faculty can adapt lecture content and tutorials based on real simulation analytics before clinic rotations.
+                    <strong className="text-slate-900">Targeted Teaching Reinforcement:</strong> Faculty can adapt lecture content and tutorials based on real simulation analytics before clinic rotations.
                   </span>
                 </li>
               </ul>
@@ -665,47 +744,47 @@ export default function LandingPage() {
       {/* ─────────────────────────────────────────────────────────────
           SECTION 4: OUR ETHOS & PEDAGOGY
       ────────────────────────────────────────────────────────────── */}
-      <section id="ethos" className="py-20 border-t border-slate-800/80 bg-slate-950">
+      <section id="ethos" className="py-20 border-t border-emerald-100/90 bg-[#f4fbf7]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-white px-3 py-1 rounded-full border border-emerald-200">
               Our Educational Ethos
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               Built on Pedagogical Safety, Integrity, and Global Access
             </h2>
-            <p className="text-slate-400 text-base sm:text-lg">
+            <p className="text-slate-600 text-base sm:text-lg">
               VewAI was conceived from inside the veterinary classroom, designed not to replace educators, but to equip them with scalable tools.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-6 space-y-3">
-              <div className="h-10 w-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+            <div className="rounded-2xl border border-emerald-100 bg-white p-6 space-y-3 shadow-2xs hover:shadow-md transition-all">
+              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <ShieldCheck className="h-5 w-5" />
               </div>
-              <h3 className="text-lg font-bold text-white">Safe-to-Fail Learning</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
+              <h3 className="text-lg font-bold text-slate-900">Safe-to-Fail Learning</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
                 True competence requires experimenting with communication styles. Our simulator creates a psychologically safe environment where mistakes lead to reflection rather than real-world repercussions.
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-6 space-y-3">
-              <div className="h-10 w-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+            <div className="rounded-2xl border border-emerald-100 bg-white p-6 space-y-3 shadow-2xs hover:shadow-md transition-all">
+              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <HeartHandshake className="h-5 w-5" />
               </div>
-              <h3 className="text-lg font-bold text-white">Equitable Access</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
+              <h3 className="text-lg font-bold text-slate-900">Equitable Access</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
                 Simulation should not be reserved only for wealthy institutions with large actor budgets. We are committed to making high-fidelity practice accessible to veterinary schools globally.
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-6 space-y-3">
-              <div className="h-10 w-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+            <div className="rounded-2xl border border-emerald-100 bg-white p-6 space-y-3 shadow-2xs hover:shadow-md transition-all">
+              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <Lightbulb className="h-5 w-5" />
               </div>
-              <h3 className="text-lg font-bold text-white">Faculty-Empowered</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
+              <h3 className="text-lg font-bold text-slate-900">Faculty-Empowered</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
                 AI handles repetitive baseline simulation practice so clinical faculty can dedicate their valuable time to personalized mentorship, advanced procedural training, and bedside rounds.
               </p>
             </div>
@@ -716,16 +795,17 @@ export default function LandingPage() {
       {/* ─────────────────────────────────────────────────────────────
           SECTION 5: LEADERSHIP & THE TEAM
       ────────────────────────────────────────────────────────────── */}
-      <section id="team" className="py-20 border-t border-slate-800/80 bg-slate-900/50">
+      <section id="team" className="py-20 border-t border-emerald-100/90 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
               Founders &amp; Leadership
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               Conceived by Veterinary Clinical Educators
             </h2>
-            <p className="text-slate-400 text-base sm:text-lg">
+            {/* Highly visible, bold and clear contrast subtitle */}
+            <p className="text-slate-800 font-semibold text-base sm:text-lg max-w-2xl mx-auto">
               VewAI is created by European Veterinary Specialists and clinical educators with decades of university teaching and international specialist practice.
             </p>
           </div>
@@ -733,72 +813,72 @@ export default function LandingPage() {
           {/* Clinical Leadership (The Faces) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-14">
             {/* Dr. Marco Duz */}
-            <div className="rounded-2xl border border-slate-800 bg-slate-950 p-8 space-y-4 shadow-xl">
+            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-8 space-y-4 shadow-sm hover:border-emerald-300 hover:shadow-md transition-all">
               <div className="flex items-center gap-4">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 text-white font-extrabold text-lg shadow-md">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 text-white font-extrabold text-lg shadow-md">
                   MD
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">Dr. Marco Duz</h3>
-                  <p className="text-xs text-emerald-400 font-mono">
+                  <h3 className="text-xl font-bold text-slate-900">Dr. Marco Duz</h3>
+                  <p className="text-xs text-emerald-800 font-mono font-bold">
                     MedVet MVM(Res) DipECEIM PhD SFHEA MRCVS
                   </p>
-                  <p className="text-xs text-slate-400">Co-Founder &amp; Clinical Lead</p>
+                  <p className="text-xs text-slate-600 font-medium">Co-Founder &amp; Clinical Lead</p>
                 </div>
               </div>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-slate-700 leading-relaxed">
                 Clinical Associate Professor in Equine Internal Medicine at the University of Nottingham. Diplomate of the European College of Equine Internal Medicine (ECEIM), Senior Fellow of the Higher Education Academy (SFHEA), and Treasurer of the ECEIM Executive Committee, with over 20 years of clinical and educational experience worldwide.
               </p>
             </div>
 
             {/* Dr. Ignacio Corradini */}
-            <div className="rounded-2xl border border-slate-800 bg-slate-950 p-8 space-y-4 shadow-xl">
+            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-8 space-y-4 shadow-sm hover:border-emerald-300 hover:shadow-md transition-all">
               <div className="flex items-center gap-4">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-700 text-white font-extrabold text-lg shadow-md">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-600 to-cyan-700 text-white font-extrabold text-lg shadow-md">
                   IC
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">Dr. Ignacio Corradini</h3>
-                  <p className="text-xs text-emerald-400 font-mono">
+                  <h3 className="text-xl font-bold text-slate-900">Dr. Ignacio Corradini</h3>
+                  <p className="text-xs text-emerald-800 font-mono font-bold">
                     MV MSc FHEA EBVS DipECEIM MRCVS
                   </p>
-                  <p className="text-xs text-slate-400">Co-Founder &amp; AI Educational Strategy</p>
+                  <p className="text-xs text-slate-600 font-medium">Co-Founder &amp; AI Educational Strategy</p>
                 </div>
               </div>
-              <p className="text-sm text-slate-300 leading-relaxed">
-                Clinical Associate Professor in Equine Internal Medicine and European Specialist (EBVS DipECEIM). Chair of the Digital Learning Group at the University of Nottingham&apos;s School of Veterinary Medicine and Science, pioneering AI integration and patient-side clinical reasoning within modern curricula.
+              <p className="text-sm text-slate-700 leading-relaxed">
+                Clinical Assistant Professor in Equine Internal Medicine and European Specialist (EBVS DipECEIM). Chair of the Digital Learning Group at the University of Nottingham&apos;s School of Veterinary Medicine and Science, pioneering AI integration and patient-side clinical reasoning within modern curricula.
               </p>
             </div>
           </div>
 
           {/* Technical Team */}
-          <div className="max-w-3xl mx-auto rounded-xl border border-slate-800 bg-slate-950/70 p-6 md:p-8">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-6 text-center">
+          <div className="max-w-3xl mx-auto rounded-2xl border border-emerald-100 bg-[#f4fbf7] p-6 md:p-8">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-6 text-center">
               Engineering &amp; Technical Development
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="flex items-start gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-800 text-slate-300 font-bold text-sm">
+              <div className="flex items-start gap-3 bg-white p-4 rounded-xl border border-emerald-100 shadow-2xs">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-800 font-bold text-sm">
                   SC
                 </div>
                 <div>
-                  <h5 className="text-sm font-bold text-white">Dr. Sebastian Corradini</h5>
-                  <p className="text-xs text-emerald-400">Technical Lead</p>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <h5 className="text-sm font-bold text-slate-900">Dr. Sebastian Corradini</h5>
+                  <p className="text-xs text-emerald-700 font-semibold">Technical Lead</p>
+                  <p className="text-xs text-slate-600 mt-1 leading-normal">
                     Medical Doctor and certified AI developer specializing in clinical simulation architecture and healthcare NLP.
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-800 text-slate-300 font-bold text-sm">
+              <div className="flex items-start gap-3 bg-white p-4 rounded-xl border border-emerald-100 shadow-2xs">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-800 font-bold text-sm">
                   NC
                 </div>
                 <div>
-                  <h5 className="text-sm font-bold text-white">Nick Coleman</h5>
-                  <p className="text-xs text-emerald-400">Senior Full-Stack Developer</p>
-                  <p className="text-xs text-slate-400 mt-1">
-                    Senior software engineer with expertise in scalable web architectures, real-time data, and secure cloud infrastructure.
+                  <h5 className="text-sm font-bold text-slate-900">Nick Coleman</h5>
+                  <p className="text-xs text-emerald-700 font-semibold">Senior Full-Stack Developer</p>
+                  <p className="text-xs text-slate-600 mt-1 leading-normal">
+                    Lead platform engineer architecting responsive interactive interfaces, database infrastructure, and pedagogical scoring modules.
                   </p>
                 </div>
               </div>
@@ -808,83 +888,94 @@ export default function LandingPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 6: REGISTER INTEREST & EARLY ACCESS
+          SECTION 6: REGISTER INTEREST / EARLY ADOPTERS CONTACT
       ────────────────────────────────────────────────────────────── */}
-      <section id="contact" className="py-20 border-t border-slate-800/80 bg-slate-950">
+      <section id="contact" className="py-20 border-t border-emerald-100/90 bg-gradient-to-b from-[#eef9f4] via-[#f7fdfa] to-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto text-center space-y-4 mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
-              Pilot Collaboration
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-              Register Interest for Future Trials
-            </h2>
-            <p className="text-slate-400 text-sm sm:text-base">
-              We are currently conducting pilot studies with veterinary students to perfect the simulation engine. If you are a veterinary school leader, clinical educator, or student interested in early trial access, connect with our team.
-            </p>
-          </div>
+          <div className="max-w-2xl mx-auto rounded-3xl border border-emerald-200/90 bg-white p-8 md:p-10 shadow-xl shadow-emerald-950/5">
+            <div className="text-center space-y-3 mb-8">
+              <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-xs font-bold uppercase tracking-wider text-emerald-800">
+                <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
+                <span>Early Academic Partnership</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                Register Your University or School
+              </h2>
+              <p className="text-sm text-slate-600">
+                We are currently collaborating with veterinary schools and educators for our initial academic evaluation cohorts. Reach out to request a faculty presentation or pilot access.
+              </p>
+            </div>
 
-          <div className="max-w-xl mx-auto rounded-2xl border border-slate-800 bg-slate-900/70 p-6 sm:p-8 shadow-2xl backdrop-blur-md">
             {formSubmitted ? (
-              <div className="text-center py-8 space-y-4 animate-in fade-in-50">
-                <div className="h-14 w-14 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
+              <div className="rounded-2xl border border-emerald-300 bg-emerald-50 p-8 text-center space-y-4 animate-in fade-in-50">
+                <div className="h-14 w-14 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto shadow-sm">
                   <CheckCircle2 className="h-8 w-8" />
                 </div>
-                <h3 className="text-xl font-bold text-white">Thank You for Your Interest!</h3>
-                <p className="text-sm text-slate-300">
-                  Your details have been received. We will reach out from{" "}
-                  <strong className="text-emerald-400">vewai.education@gmail.com</strong> regarding upcoming trial cohorts.
+                <h3 className="text-xl font-bold text-slate-900">Thank you for your interest!</h3>
+                <p className="text-sm text-slate-700 max-w-md mx-auto">
+                  Our clinical education leads (Dr. Marco Duz &amp; Dr. Ignacio Corradini) have received your details. We will be in touch shortly via <strong>{formData.email}</strong> to coordinate a walkthrough.
                 </p>
-                <button
-                  type="button"
-                  onClick={() => setFormSubmitted(false)}
-                  className="mt-4 text-xs font-semibold text-emerald-400 hover:underline"
-                >
-                  Send another inquiry
-                </button>
+                <div className="pt-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormSubmitted(false);
+                      setFormData({
+                        name: "",
+                        institution: "",
+                        role: "Faculty / Educator",
+                        email: "",
+                        message: "",
+                      });
+                    }}
+                    className="text-xs font-semibold text-emerald-700 hover:underline cursor-pointer"
+                  >
+                    Submit another enquiry
+                  </button>
+                </div>
               </div>
             ) : (
               <form onSubmit={handleFormSubmit} className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="block text-xs font-medium text-slate-300 mb-1">
+                  <label htmlFor="name" className="block text-xs font-bold text-slate-700 mb-1">
                     Your Name *
                   </label>
                   <input
                     id="name"
                     required
                     type="text"
-                    placeholder="e.g. Dr. Alex Mercer"
+                    placeholder="Type your first and last name here"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                    className="w-full rounded-xl border border-emerald-200 bg-[#fcfdfd] px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="institution" className="block text-xs font-medium text-slate-300 mb-1">
+                    <label htmlFor="institution" className="block text-xs font-bold text-slate-700 mb-1">
                       University / Institution *
                     </label>
                     <input
                       id="institution"
                       required
                       type="text"
-                      placeholder="e.g. Royal Vet College"
+                      placeholder="eg. University of Nottingham"
                       value={formData.institution}
                       onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
-                      className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                      className="w-full rounded-xl border border-emerald-200 bg-[#fcfdfd] px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="role" className="block text-xs font-medium text-slate-300 mb-1">
+                    <label htmlFor="role" className="block text-xs font-bold text-slate-700 mb-1">
                       Your Role *
                     </label>
                     <select
                       id="role"
                       value={formData.role}
                       onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                      className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-sm text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                      className="w-full rounded-xl border border-emerald-200 bg-[#fcfdfd] px-3.5 py-2.5 text-sm text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
                     >
                       <option value="Dean / School Director">Dean / School Director</option>
                       <option value="Faculty / Educator">Faculty / Educator</option>
@@ -896,22 +987,22 @@ export default function LandingPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-xs font-medium text-slate-300 mb-1">
+                  <label htmlFor="email" className="block text-xs font-bold text-slate-700 mb-1">
                     Work / Academic Email *
                   </label>
                   <input
                     id="email"
                     required
                     type="email"
-                    placeholder="alex.mercer@institution.ac.uk"
+                    placeholder="eg. name.lastname@yourinstitution.edu"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                    className="w-full rounded-xl border border-emerald-200 bg-[#fcfdfd] px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-xs font-medium text-slate-300 mb-1">
+                  <label htmlFor="message" className="block text-xs font-bold text-slate-700 mb-1">
                     Message or Cohort Size (Optional)
                   </label>
                   <textarea
@@ -920,23 +1011,23 @@ export default function LandingPage() {
                     placeholder="Tell us about your teaching focus or number of students..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                    className="w-full rounded-xl border border-emerald-200 bg-[#fcfdfd] px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-emerald-500 py-3 text-sm font-semibold text-slate-950 hover:bg-emerald-400 transition-all shadow-md shadow-emerald-500/20 flex items-center justify-center gap-2"
+                  className="w-full rounded-xl bg-emerald-600 py-3.5 text-sm font-bold text-white hover:bg-emerald-700 transition-all shadow-md shadow-emerald-600/25 flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Send className="h-4 w-4" />
                   <span>Submit Early Access Request</span>
                 </button>
 
-                <p className="text-[11px] text-center text-slate-400 pt-2">
-                  Prefer direct email? Reach our founders directly at{" "}
+                <p className="text-[11px] text-center text-slate-500 pt-2">
+                  Direct email enquiries:{" "}
                   <a
                     href="mailto:vewai.education@gmail.com"
-                    className="text-emerald-400 hover:underline font-mono"
+                    className="font-bold text-emerald-700 hover:underline"
                   >
                     vewai.education@gmail.com
                   </a>
@@ -948,9 +1039,9 @@ export default function LandingPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          FOOTER
+          FOOTER (Sophisticated Dark Spruce & Emerald)
       ────────────────────────────────────────────────────────────── */}
-      <footer className="border-t border-slate-800 bg-slate-950 py-12 text-slate-400 text-xs">
+      <footer className="border-t border-[#0f342d] bg-[#071f1a] py-12 text-slate-300 text-xs">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <Image
@@ -958,40 +1049,39 @@ export default function LandingPage() {
               alt="VEWAI Logo"
               width={28}
               height={28}
-              className="h-7 w-7 object-contain opacity-80"
+              className="h-7 w-7 object-contain opacity-90"
             />
             <div className="flex flex-col">
-              <span className="font-semibold text-white text-sm">VEWAI Ltd</span>
-              <span className="text-[10px] text-slate-400">
+              <span className="font-bold text-white text-sm">VEWAI Ltd</span>
+              <span className="text-[11px] text-emerald-400/90">
                 Veterinary Education with Artificial Intelligence
               </span>
             </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-6 text-slate-400">
-            <a href="#challenge" className="hover:text-white transition-colors">
-              The Need
+            <a href="#challenge" className="hover:text-emerald-400 transition-colors">
+              The Challenge
             </a>
-            <a href="#solution" className="hover:text-white transition-colors">
+            <a href="#solution" className="hover:text-emerald-400 transition-colors">
               The Solution
             </a>
-            <a href="#team" className="hover:text-white transition-colors">
-              Leadership
+            <a href="#team" className="hover:text-emerald-400 transition-colors">
+              Team
             </a>
-            <Link href="/login" className="hover:text-emerald-400 transition-colors">
-              Platform Login
+            <Link href="/login" className="hover:text-emerald-400 transition-colors font-medium">
+              Platform Access
             </Link>
             <a
               href="mailto:vewai.education@gmail.com"
-              className="hover:text-emerald-400 transition-colors font-mono"
+              className="hover:text-emerald-400 transition-colors"
             >
-              vewai.education@gmail.com
+              Contact: vewai.education@gmail.com
             </a>
           </div>
 
-          <div className="text-center sm:text-right text-[11px] text-slate-400">
-            &copy; {new Date().getFullYear()} VEWAI Ltd. All rights reserved.
-            <div className="mt-0.5 text-slate-400">Currently in controlled empirical pilot testing.</div>
+          <div className="text-slate-400 text-[11px] text-center sm:text-right">
+            &copy; {new Date().getFullYear()} VEWAI. All rights reserved.
           </div>
         </div>
       </footer>
