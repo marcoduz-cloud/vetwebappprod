@@ -28,6 +28,8 @@ import {
   BrainCircuit,
   Lock,
   Play,
+  Quote,
+  Info,
 } from "lucide-react";
 
 // Rotating hero message bubbles (defined statically outside component)
@@ -58,6 +60,52 @@ const HERO_MESSAGES = [
   },
 ];
 
+// Student Testimonials collected during the 2025 pilot study
+const TESTIMONIALS = [
+  {
+    id: 1,
+    quote: "Awesome tool, user friendly and engaging.",
+    value: "User Experience",
+    author: "Veterinary Student",
+    affiliation: "University of Nottingham | 2025 Pilot Study",
+  },
+  {
+    id: 2,
+    quote: "I liked getting more information as you go along like in a real life case and that you had to ask specific questions in order to get the full picture.",
+    value: "Clinical Reasoning",
+    author: "Veterinary Student",
+    affiliation: "University of Nottingham | 2025 Pilot Study",
+  },
+  {
+    id: 3,
+    quote: "Towards the end of the case I felt I was able to engage with it more and treat it as if it were a real scenario.",
+    value: "Clinical Realism",
+    author: "Veterinary Student",
+    affiliation: "University of Nottingham | 2025 Pilot Study",
+  },
+  {
+    id: 4,
+    quote: "Really enjoyed using this and would use it again! The feedback was useful too.",
+    value: "Engagement & Feedback",
+    author: "Veterinary Student",
+    affiliation: "University of Nottingham | 2025 Pilot Study",
+  },
+  {
+    id: 5,
+    quote: "This is a very interesting and beneficial use of AI and I feel it could be a very effective revision method for future vet students.",
+    value: "Educational Value",
+    author: "Veterinary Student",
+    affiliation: "University of Nottingham | 2025 Pilot Study",
+  },
+  {
+    id: 6,
+    quote: "Overall really engaging and a good way to go through a case and get me thinking about on farm scenarios.",
+    value: "Application of Knowledge",
+    author: "Veterinary Student",
+    affiliation: "University of Nottingham | 2025 Pilot Study",
+  },
+];
+
 export default function LandingPage() {
   const { user } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -75,6 +123,16 @@ export default function LandingPage() {
     }, 3500);
     return () => clearInterval(timer);
   }, [isPaused]);
+
+  // Testimonials carousel state
+  const [testimonialIndex, setTestimonialIndex] = useState(0);
+
+  const nextTestimonial = () => {
+    setTestimonialIndex((prev) => (prev + 1) % TESTIMONIALS.length);
+  };
+  const prevTestimonial = () => {
+    setTestimonialIndex((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+  };
 
   // Form state
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -95,6 +153,7 @@ export default function LandingPage() {
     { name: "The Challenge", href: "#challenge" },
     { name: "The Solution", href: "#solution" },
     { name: "Educator Insights", href: "#insights" },
+    { name: "Student Feedback", href: "#testimonials" },
     { name: "Our Ethos", href: "#ethos" },
     { name: "Leadership & Team", href: "#team" },
     { name: "Register Interest", href: "#contact" },
@@ -175,6 +234,12 @@ export default function LandingPage() {
               className="px-3 py-2 text-sm font-medium text-slate-600 hover:text-emerald-700 transition-colors"
             >
               The Solution
+            </a>
+            <a
+              href="#testimonials"
+              className="px-3 py-2 text-sm font-medium text-slate-600 hover:text-emerald-700 transition-colors"
+            >
+              Student Feedback
             </a>
             <a
               href="#team"
@@ -806,9 +871,136 @@ export default function LandingPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 4: OUR ETHOS & PEDAGOGY
+          SECTION 4: STUDENT TESTIMONIALS & PILOT EVALUATION
       ────────────────────────────────────────────────────────────── */}
-      <section id="ethos" className="py-20 border-t border-emerald-100/90 bg-[#f4fbf7]">
+      <section id="testimonials" className="py-20 border-t border-emerald-100/90 bg-[#f4fbf7]">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto text-center space-y-4 mb-12">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-white px-3 py-1 rounded-full border border-emerald-200">
+              Pilot Evaluation Feedback
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              What Veterinary Students Say About VEWAI
+            </h2>
+            <p className="text-slate-600 text-base sm:text-lg">
+              Real feedback from veterinary students who tested an earlier version of our AI-powered clinical simulation platform.
+            </p>
+          </div>
+
+          {/* Carousel Container */}
+          <div className="max-w-6xl mx-auto">
+            {/* Top Carousel Controls Bar */}
+            <div className="flex items-center justify-between mb-6 px-1">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-semibold text-emerald-800 bg-emerald-100/70 px-2.5 py-0.5 rounded-full">
+                  Showing {testimonialIndex + 1} to {Math.min(testimonialIndex + 3, TESTIMONIALS.length)} of {TESTIMONIALS.length} Comments
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={prevTestimonial}
+                  className="p-2 rounded-full border border-emerald-200 bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 transition-all shadow-2xs cursor-pointer"
+                  aria-label="Previous testimonials"
+                  title="Previous testimonials"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={nextTestimonial}
+                  className="p-2 rounded-full border border-emerald-200 bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 transition-all shadow-2xs cursor-pointer"
+                  aria-label="Next testimonials"
+                  title="Next testimonials"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* 3 Visible Testimonial Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[0, 1, 2].map((offset) => {
+                const item = TESTIMONIALS[(testimonialIndex + offset) % TESTIMONIALS.length];
+                return (
+                  <div
+                    key={`${item.id}-${testimonialIndex}`}
+                    className="flex flex-col justify-between rounded-2xl border border-emerald-100 bg-white p-7 shadow-sm hover:border-emerald-300 hover:shadow-md transition-all duration-300 animate-in fade-in"
+                  >
+                    <div>
+                      {/* Card Header: Quote icon & Value badge */}
+                      <div className="flex items-center justify-between gap-2 mb-4">
+                        <div className="h-9 w-9 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
+                          <Quote className="h-4 w-4" />
+                        </div>
+                        <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+                          {item.value}
+                        </span>
+                      </div>
+
+                      {/* Quotation text */}
+                      <p className="text-base font-semibold text-slate-800 leading-relaxed italic my-2">
+                        &ldquo;{item.quote}&rdquo;
+                      </p>
+                    </div>
+
+                    {/* Attribution footer */}
+                    <div className="pt-5 mt-4 border-t border-emerald-100/80">
+                      <div className="flex items-center gap-3">
+                        <div className="h-10 w-10 shrink-0 rounded-full bg-gradient-to-br from-emerald-500 to-teal-700 text-white font-bold text-xs flex items-center justify-center shadow-xs">
+                          VS
+                        </div>
+                        <div>
+                          <div className="text-sm font-bold text-slate-900">{item.author}</div>
+                          <div className="text-[11px] text-emerald-700 font-semibold">
+                            {item.affiliation}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Indicator Dots */}
+            <div className="flex items-center justify-center gap-2 mt-8">
+              {TESTIMONIALS.map((item, idx) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => setTestimonialIndex(idx)}
+                  className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                    idx === testimonialIndex
+                      ? "w-8 bg-emerald-600 shadow-xs"
+                      : "w-2.5 bg-emerald-200 hover:bg-emerald-300"
+                  }`}
+                  aria-label={`Go to testimonial ${idx + 1}`}
+                  title={item.value}
+                />
+              ))}
+            </div>
+
+            {/* Scientific Transparency Disclosure */}
+            <div className="max-w-3xl mx-auto mt-10 rounded-2xl border border-emerald-200/90 bg-white/90 p-4 sm:p-5 text-xs text-slate-600 flex items-start gap-3.5 shadow-2xs">
+              <Info className="h-5 w-5 text-emerald-700 shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <span className="font-bold text-slate-900 text-xs block">
+                  Scientific Transparency &amp; Study Context
+                </span>
+                <p className="leading-relaxed text-slate-600">
+                  These quotations were collected during a 2025 student evaluation of an earlier version of VEWAI. Feedback from this study has informed subsequent platform development.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION 5: OUR ETHOS & PEDAGOGY
+      ────────────────────────────────────────────────────────────── */}
+      <section id="ethos" className="py-20 border-t border-emerald-100/90 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-white px-3 py-1 rounded-full border border-emerald-200">
@@ -857,9 +1049,9 @@ export default function LandingPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 5: LEADERSHIP & THE TEAM
+          SECTION 6: LEADERSHIP & THE TEAM
       ────────────────────────────────────────────────────────────── */}
-      <section id="team" className="py-20 border-t border-emerald-100/90 bg-white">
+      <section id="team" className="py-20 border-t border-emerald-100/90 bg-[#f4fbf7]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
@@ -1129,6 +1321,9 @@ export default function LandingPage() {
             </a>
             <a href="#solution" className="hover:text-emerald-400 transition-colors">
               The Solution
+            </a>
+            <a href="#testimonials" className="hover:text-emerald-400 transition-colors">
+              Student Feedback
             </a>
             <a href="#team" className="hover:text-emerald-400 transition-colors">
               Team
