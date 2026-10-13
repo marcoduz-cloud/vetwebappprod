@@ -607,9 +607,9 @@ export default function LandingPage() {
               <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <Stethoscope className="h-5 w-5" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900">Connect communication to care</h3>
+              <h3 className="text-lg font-bold text-slate-900">Communication in clinical practice</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                As learners progress, use conversation to gather information, discuss options and support clinical decisions.
+                In advanced scenarios, learners practise taking a history, explaining options and discussing a plan with an owner, while applying their clinical reasoning.
               </p>
             </div>
           </div>
