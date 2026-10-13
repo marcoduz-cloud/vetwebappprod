@@ -513,6 +513,60 @@ export default function LandingPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
+          SECTION: RESEARCH EVIDENCE (WHY COMMUNICATION PRACTICE MATTERS)
+      ────────────────────────────────────────────────────────────── */}
+      <section id="evidence" className="py-20 md:py-24 border-t border-emerald-100 bg-gradient-to-b from-white via-emerald-50/40 to-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto rounded-3xl border border-emerald-200/90 bg-white p-8 sm:p-12 md:p-14 shadow-xl shadow-emerald-950/5">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              {/* Prominent Figure Column */}
+              <div className="lg:col-span-5 text-center lg:text-left">
+                <span className="inline-block text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100/70 px-3 py-1 rounded-full mb-4">
+                  Research Evidence
+                </span>
+                <div className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-emerald-700 tracking-tight leading-none">
+                  80 <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-700">of 100</span>
+                </div>
+                <div className="text-lg sm:text-xl font-bold text-slate-800 mt-2">
+                  cases
+                </div>
+                <p className="text-xs text-slate-500 mt-2">
+                  Settled veterinary negligence cases examined
+                </p>
+              </div>
+
+              {/* Context & Description Column */}
+              <div className="lg:col-span-7 space-y-4 border-t lg:border-t-0 lg:border-l border-emerald-100 pt-6 lg:pt-0 lg:pl-10">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                  Why communication practice matters
+                </h2>
+
+                <p className="text-base sm:text-lg text-slate-800 font-medium leading-relaxed">
+                  In a study of 100 settled cases of alleged veterinary professional negligence involving canine patients, communication problems were identified in 80 cases.
+                </p>
+
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  The study examined communication with owners and within veterinary teams. It highlights the importance of practising these interactions; it does not evaluate VEWAI.
+                </p>
+
+                <div className="pt-2">
+                  <a
+                    href="https://doi.org/10.1002/vetr.1068"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 hover:underline"
+                  >
+                    <span>Russell, Mossop, Forbes, &amp; Oxtoby (2022) · Veterinary Record (DOI: 10.1002/vetr.1068)</span>
+                    <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
           SECTION 1: THE CHALLENGE
       ────────────────────────────────────────────────────────────── */}
       <section id="challenge" className="py-20 border-t border-emerald-100/90 bg-white">
@@ -531,7 +585,7 @@ export default function LandingPage() {
           </div>
 
           {/* 3 Concise Challenge Themes */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-7 space-y-3 shadow-2xs hover:border-emerald-300 hover:shadow-md transition-all">
               <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <HeartHandshake className="h-5 w-5" />
@@ -560,30 +614,6 @@ export default function LandingPage() {
               <p className="text-sm text-slate-600 leading-relaxed">
                 As learners progress, use conversation to gather information, discuss options and support clinical decisions.
               </p>
-            </div>
-          </div>
-
-          {/* Smaller evidence note below cards */}
-          <div className="max-w-3xl mx-auto rounded-xl border border-emerald-200/80 bg-emerald-50/50 p-4 sm:p-5 text-xs text-slate-700 flex items-start gap-3.5 shadow-2xs">
-            <Info className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <span className="font-bold text-slate-900 text-xs block">
-                Evidence note
-              </span>
-              <p className="leading-relaxed text-slate-600">
-                In a study of 100 settled cases of alleged professional negligence involving canine patients, communication problems were identified in 80 cases.
-              </p>
-              <div>
-                <a
-                  href="https://doi.org/10.1002/vetr.1068"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 font-semibold text-emerald-700 hover:text-emerald-800 hover:underline"
-                >
-                  <span>Russell, Mossop, Forbes, &amp; Oxtoby (2022) · Veterinary Record (DOI: 10.1002/vetr.1068)</span>
-                  <ExternalLink className="h-3 w-3" />
-                </a>
-              </div>
             </div>
           </div>
         </div>
