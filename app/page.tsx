@@ -17,6 +17,8 @@ import {
   CheckCircle2,
   ExternalLink,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Menu,
   X,
   Send,
@@ -28,48 +30,51 @@ import {
   Play,
 } from "lucide-react";
 
+// Rotating hero message bubbles (defined statically outside component)
+const HERO_MESSAGES = [
+  {
+    id: 1,
+    badge: "Clinical Simulation",
+    text: "The interactive simulation platform authored by board-certified veterinary specialists",
+    icon: Stethoscope,
+  },
+  {
+    id: 2,
+    badge: "Pedagogical Safety",
+    text: "AI is grounded to roleplay pet owners, veterinary nurses, and team members in a closed, safe, and academically rigorous environment.",
+    icon: ShieldCheck,
+  },
+  {
+    id: 3,
+    badge: "Core Competency",
+    text: "Practice communication skills and clinical reasoning in a safe environment",
+    icon: MessageSquare,
+  },
+  {
+    id: 4,
+    badge: "Educational Ethos",
+    text: "Use AI to enhance learning, not to substitute it!",
+    icon: Sparkles,
+  },
+];
+
 export default function LandingPage() {
   const { user } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [whoWeAreDropdownOpen, setWhoWeAreDropdownOpen] = useState(false);
   const [mockupTab, setMockupTab] = useState<"video" | "dialogue">("video");
 
-  // Rotating hero message bubbles
-  const heroMessages = [
-    {
-      id: 1,
-      badge: "Clinical Simulation",
-      text: "The interactive simulation platform authored by board-certified veterinary specialists",
-      icon: Stethoscope,
-    },
-    {
-      id: 2,
-      badge: "Pedagogical Safety",
-      text: "AI is grounded to roleplay pet owners, veterinary nurses, and team members in a closed, safe, and academically rigorous environment.",
-      icon: ShieldCheck,
-    },
-    {
-      id: 3,
-      badge: "Core Competency",
-      text: "Practice communication skills and clinical reasoning in a safe environment",
-      icon: MessageSquare,
-    },
-    {
-      id: 4,
-      badge: "Educational Ethos",
-      text: "Use AI to enhance learning, not to substitute it!",
-      icon: Sparkles,
-    },
-  ];
-
+  // Rotating hero state
   const [activeMessageIndex, setActiveMessageIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
+    if (isPaused) return;
     const timer = setInterval(() => {
-      setActiveMessageIndex((prev) => (prev + 1) % heroMessages.length);
-    }, 4500);
+      setActiveMessageIndex((prev) => (prev + 1) % HERO_MESSAGES.length);
+    }, 3500);
     return () => clearInterval(timer);
-  }, [heroMessages.length]);
+  }, [isPaused]);
 
   // Form state
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -282,33 +287,92 @@ export default function LandingPage() {
                 DYNAMIC SWAPPING MESSAGE BUBBLES
             ────────────────────────────────────────────────────────── */}
             <div className="max-w-2xl mx-auto pt-2">
+              <style>{`
+                @keyframes cycleProgressBar {
+                  from { width: 0%; }
+                  to { width: 100%; }
+                }
+                .cycle-progress-anim {
+                  animation: cycleProgressBar 3.5s linear infinite;
+                }
+              `}</style>
+
               {/* Active animated bubble */}
-              <div className="relative min-h-[110px] flex items-center justify-center p-5 rounded-2xl border border-emerald-200/90 bg-white/95 shadow-lg shadow-emerald-900/5 backdrop-blur-md transition-all duration-300">
+              <div
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+                className="group relative min-h-[118px] flex items-center justify-between p-4 sm:p-5 rounded-2xl border border-emerald-200/90 bg-white shadow-lg shadow-emerald-900/5 backdrop-blur-md overflow-hidden transition-all duration-300"
+              >
+                {/* Visual cycle progress bar line */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-emerald-100 overflow-hidden">
+                  <div
+                    key={`${activeMessageIndex}-${isPaused}`}
+                    className={`h-full bg-emerald-500 origin-left ${isPaused ? "w-full" : "cycle-progress-anim"}`}
+                  />
+                </div>
+
+                {/* Previous button */}
+                <button
+                  type="button"
+                  onClick={() =>
+                    setActiveMessageIndex((prev) => (prev - 1 + HERO_MESSAGES.length) % HERO_MESSAGES.length)
+                  }
+                  className="p-1.5 rounded-full hover:bg-emerald-100 text-slate-400 hover:text-emerald-800 transition-colors shrink-0 mr-1 sm:mr-2 cursor-pointer"
+                  aria-label="Previous message"
+                  title="Previous message"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+
+                {/* Message Content */}
                 <div
                   key={activeMessageIndex}
-                  className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3.5 animate-in fade-in-50 slide-in-from-bottom-2 duration-300"
+                  className="flex-1 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3.5 transition-all duration-300 animate-in fade-in-50 slide-in-from-bottom-2"
                 >
                   <div className="h-11 w-11 shrink-0 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shadow-xs">
-                    {React.createElement(heroMessages[activeMessageIndex].icon, { className: "h-5 w-5" })}
+                    {React.createElement(HERO_MESSAGES[activeMessageIndex].icon, { className: "h-5 w-5" })}
                   </div>
-                  <div>
-                    <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md mb-1">
-                      {heroMessages[activeMessageIndex].badge}
-                    </span>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                      <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
+                        {HERO_MESSAGES[activeMessageIndex].badge}
+                      </span>
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded-full">
+                        {activeMessageIndex + 1} / {HERO_MESSAGES.length}
+                      </span>
+                      {isPaused && (
+                        <span className="text-[10px] text-slate-400 italic">Paused</span>
+                      )}
+                    </div>
                     <p className="text-base sm:text-lg font-semibold text-slate-800 leading-snug">
-                      &ldquo;{heroMessages[activeMessageIndex].text}&rdquo;
+                      &ldquo;{HERO_MESSAGES[activeMessageIndex].text}&rdquo;
                     </p>
                   </div>
                 </div>
+
+                {/* Next button */}
+                <button
+                  type="button"
+                  onClick={() =>
+                    setActiveMessageIndex((prev) => (prev + 1) % HERO_MESSAGES.length)
+                  }
+                  className="p-1.5 rounded-full hover:bg-emerald-100 text-slate-400 hover:text-emerald-800 transition-colors shrink-0 ml-1 sm:ml-2 cursor-pointer"
+                  aria-label="Next message"
+                  title="Next message"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
               </div>
 
               {/* Interactive bubble selector pills */}
               <div className="flex flex-wrap items-center justify-center gap-2 mt-3.5">
-                {heroMessages.map((msg, idx) => (
+                {HERO_MESSAGES.map((msg, idx) => (
                   <button
                     key={msg.id}
                     type="button"
-                    onClick={() => setActiveMessageIndex(idx)}
+                    onClick={() => {
+                      setActiveMessageIndex(idx);
+                    }}
                     className={`px-3 py-1 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
                       idx === activeMessageIndex
                         ? "bg-emerald-600 text-white shadow-xs scale-105"
