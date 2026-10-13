@@ -716,70 +716,53 @@ export default function LandingPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 2B: COMPACT LEARNING-PATH SECTION
+          SECTION 2B: COMMUNICATION SKILLS
       ────────────────────────────────────────────────────────────── */}
       <section className="py-20 border-t border-emerald-100/90 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center space-y-4 mb-14">
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-              Curriculum Progression
+              Communication Skills
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               Communication practice that grows with the learner.
             </h2>
             <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
-              VEWAI supports learners from early introductory training through clinical rotations, introducing clinical complexity as scenarios require it.
+              VEWAI brings communication skills together in realistic veterinary conversations. Educators can focus learning on individual skills or combine them within more demanding clinical consultations.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {/* Stage 1: Foundations */}
-            <div className="rounded-2xl border border-dashed border-emerald-300 bg-[#fbfdfc] p-7 space-y-3 relative shadow-2xs">
-              <div className="flex items-center justify-between gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100/70 px-2.5 py-0.5 rounded-md">
-                  Stage 1
-                </span>
-                <span className="text-[11px] font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">
-                  In development
-                </span>
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 pt-1">Foundations</h3>
+            {/* Foundations */}
+            <div className="rounded-2xl border border-emerald-200/90 bg-[#fbfdfc] p-7 space-y-3 shadow-xs hover:border-emerald-300 hover:shadow-sm transition-all">
+              <h3 className="text-lg font-bold text-slate-900">Foundations</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Opening conversations, listening, asking questions and explaining clearly.
+                Opening conversations, building rapport, listening, asking questions and explaining clearly.
               </p>
             </div>
 
-            {/* Stage 2: Applied Conversations */}
-            <div className="rounded-2xl border border-dashed border-emerald-300 bg-[#fbfdfc] p-7 space-y-3 relative shadow-2xs">
-              <div className="flex items-center justify-between gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100/70 px-2.5 py-0.5 rounded-md">
-                  Stage 2
-                </span>
-                <span className="text-[11px] font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">
-                  In development
-                </span>
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 pt-1">Applied conversations</h3>
+            {/* Applied Conversations */}
+            <div className="rounded-2xl border border-emerald-200/90 bg-[#fbfdfc] p-7 space-y-3 shadow-xs hover:border-emerald-300 hover:shadow-sm transition-all">
+              <h3 className="text-lg font-bold text-slate-900">Applied Conversations</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Responding to concerns, discussing options and communicating within the veterinary team.
+                Responding to concerns, exploring a client&apos;s perspective and discussing options.
               </p>
             </div>
 
-            {/* Stage 3: Complex Clinical Scenarios */}
-            <div className="rounded-2xl border border-emerald-300 bg-white p-7 space-y-3 relative shadow-sm">
-              <div className="flex items-center justify-between gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100/70 px-2.5 py-0.5 rounded-md">
-                  Stage 3
-                </span>
-                <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
-                  Available in pilot
-                </span>
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 pt-1">Complex clinical scenarios</h3>
+            {/* Communication in Clinical Context */}
+            <div className="rounded-2xl border border-emerald-200/90 bg-[#fbfdfc] p-7 space-y-3 shadow-xs hover:border-emerald-300 hover:shadow-sm transition-all">
+              <h3 className="text-lg font-bold text-slate-900">Communication in Clinical Context</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Bringing communication and clinical reasoning together when decisions become more demanding.
+                Bringing communication and clinical reasoning together to gather information, explain decisions and agree next steps.
               </p>
             </div>
+          </div>
+
+          {/* Development note below cards */}
+          <div className="max-w-3xl mx-auto text-center mt-10">
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed bg-emerald-50/70 border border-emerald-100 rounded-xl py-3 px-6 inline-block">
+              We are developing additional activities for earlier years of veterinary school, allowing students to focus on communication with less emphasis on clinical knowledge.
+            </p>
           </div>
         </div>
       </section>
