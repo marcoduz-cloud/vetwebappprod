@@ -22,7 +22,6 @@ import {
   Menu,
   X,
   Send,
-  Lightbulb,
   Mic,
   BrainCircuit,
   Lock,
@@ -992,44 +991,55 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-              Our Ethos
+              OUR ETHOS
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              Designed by veterinary educators for safe, repeatable practice.
+              Better conversations start with meaningful practice.
             </h2>
-            <p className="text-slate-700 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              VEWAI gives learners space to rehearse, reflect and improve without involving real clients or patients. Educators remain central to scenario design, teaching and interpretation of feedback.
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-7 space-y-3 shadow-2xs hover:shadow-md transition-all">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
+            {/* 1. Communication matters. */}
+            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-7 space-y-3 shadow-xs hover:border-emerald-300 hover:shadow-sm transition-all">
               <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
-                <ShieldCheck className="h-5 w-5" />
+                <MessageSquare className="h-5 w-5" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900">Safe rehearsal space</h3>
+              <h3 className="text-lg font-bold text-slate-900">Communication matters.</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Learners can experiment with phrasing and active listening in low-stakes scenarios, using mistakes as opportunities to reflect rather than causing real distress.
+                Listening, understanding and explaining clearly are essential veterinary skills. We put them at the heart of learning.
               </p>
             </div>
 
-            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-7 space-y-3 shadow-2xs hover:shadow-md transition-all">
+            {/* 2. Improvement takes practice. */}
+            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-7 space-y-3 shadow-xs hover:border-emerald-300 hover:shadow-sm transition-all">
               <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
-                <HeartHandshake className="h-5 w-5" />
+                <Sparkles className="h-5 w-5" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900">Broad student access</h3>
+              <h3 className="text-lg font-bold text-slate-900">Improvement takes practice.</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Supplemental conversational practice can be accessed by all students throughout the academic year, not only during occasional actor-based sessions.
+                Students need opportunities to try, receive feedback, reflect and try again—building confidence before real consultations.
               </p>
             </div>
 
-            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-7 space-y-3 shadow-2xs hover:shadow-md transition-all">
+            {/* 3. Learning should feel real. */}
+            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-7 space-y-3 shadow-xs hover:border-emerald-300 hover:shadow-sm transition-all">
               <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
-                <Lightbulb className="h-5 w-5" />
+                <Users className="h-5 w-5" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900">Educator-led teaching</h3>
+              <h3 className="text-lg font-bold text-slate-900">Learning should feel real.</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Technology supports self-directed practice, freeing educators to focus contact time on small-group discussions, clinical reasoning, and personalized coaching.
+                Engaging, realistic conversations bring learning to life, helping students prepare for the human side of veterinary practice.
+              </p>
+            </div>
+
+            {/* 4. AI should support the learning process. */}
+            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-7 space-y-3 shadow-xs hover:border-emerald-300 hover:shadow-sm transition-all">
+              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
+                <BrainCircuit className="h-5 w-5" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900">AI should support the learning process.</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Learning happens through doing, thinking and reflecting. We believe AI should create opportunities for students to practise and receive feedback, while keeping them actively responsible for their own learning.
               </p>
             </div>
           </div>
