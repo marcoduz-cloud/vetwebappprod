@@ -1079,12 +1079,23 @@ export default function LandingPage() {
                 <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-emerald-50 shadow-inner">
                   <Image
                     src="/images/founders-field.jpg"
-                    alt="Dr. Marco Duz and Dr. Ignacio Corradini in the field with an equine patient at the University of Nottingham"
+                    alt="Marco Duz and Ignacio Corradini in the field with Mango at the University of Nottingham"
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover object-center"
                     priority
                   />
+                </div>
+                <div className="p-4 pt-3.5 space-y-2 text-xs leading-relaxed">
+                  <p className="font-semibold text-slate-900">
+                    Marco (left) and Ignacio (right) with &ldquo;Mango&rdquo; (centre).
+                  </p>
+                  <p className="text-slate-600">
+                    Marco and Ignacio have known each other for over 20 years, sharing a close friendship both at work and privately. Both have a natural knack for technology and educational innovation, united by the conviction that AI offers enormous potential to support veterinary teaching and clinical learning.
+                  </p>
+                  <p className="italic text-slate-500 text-[11px] pt-1 border-t border-emerald-50">
+                    * Mango is not directly involved in VEWAI, having shown a firm preference for real rather than simulated carrots.
+                  </p>
                 </div>
               </div>
             </div>
