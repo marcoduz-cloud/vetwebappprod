@@ -697,7 +697,7 @@ export default function LandingPage() {
                     </h4>
                   </div>
                   <p className="text-sm text-slate-600 leading-relaxed">
-                    Choose ready-made clinical scenarios authored by veterinary specialists. These offer an additional practice resource, particularly for students in their final two years and during clinical rotations, which teachers can select to complement the topic being taught.
+                    Choose ready-made clinical scenarios authored by veterinary specialists. These offer an additional practice resource, particularly for students in their final two years and during clinical rotations, or veterinary surgeons aiming to perfect their reasoning and communication skills or undergoing postgraduate clinical training (internship and residency).
                   </p>
                 </div>
               </div>
