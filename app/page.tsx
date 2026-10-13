@@ -1615,7 +1615,7 @@ export default function LandingPage() {
           </div>
 
           <div className="text-slate-500 text-[11px] text-center sm:text-right">
-            &copy; {new Date().getFullYear()} VEWAI Ltd. All rights reserved.
+            &copy; 2025 VEWAI Ltd. All rights reserved.
           </div>
         </div>
       </footer>
