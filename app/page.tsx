@@ -286,6 +286,18 @@ export default function LandingPage() {
         {/* Subtle mint/emerald ambient glow */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-emerald-300/25 blur-[140px] rounded-full pointer-events-none" />
 
+        {/* Shaded, 70-80% transparent V logo watermark in hero background */}
+        <div className="absolute top-[26%] sm:top-[28%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] sm:w-[520px] md:w-[700px] aspect-[1024/764] pointer-events-none select-none z-0 opacity-[0.20]">
+          <Image
+            src="/images/logo-v.png"
+            alt=""
+            fill
+            sizes="(max-width: 768px) 340px, 700px"
+            className="object-contain"
+            priority
+          />
+        </div>
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center space-y-6">
             {/* Status Pill Badge */}
