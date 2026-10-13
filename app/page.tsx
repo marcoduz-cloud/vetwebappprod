@@ -670,7 +670,7 @@ export default function LandingPage() {
                     </h4>
                   </div>
                   <p className="text-sm text-slate-600 leading-relaxed">
-                    Build scenarios around the communication skills, topics and learning objectives you want your students to practise. Tailor the conversation to their stage of training and your curriculum.
+                    Build scenarios around the communication skills, topics and learning objectives you want your students to practise. Tailor the conversation to their stage of training and your curriculum. Use guided templates to create new cases for your students. The templates prompt you for the information needed to build a complete, realistic conversation—no previous experience in scenario creation required.
                   </p>
                 </div>
 
