@@ -521,8 +521,9 @@ export default function LandingPage() {
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
               The Need for Practice
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              Communication is a clinical skill. It needs practice.
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
+              Communication is a clinical skill <br />
+              It develops with practice
             </h2>
             <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
               Veterinary learners need opportunities to ask questions, listen, explain, respond to emotion and work with colleagues. These skills develop through practice, feedback and reflection, from the first years of training onwards.
