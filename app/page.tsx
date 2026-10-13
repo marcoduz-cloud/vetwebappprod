@@ -597,7 +597,7 @@ export default function LandingPage() {
               <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <MessageSquare className="h-5 w-5" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900">Respond to real people</h3>
+              <h3 className="text-lg font-bold text-slate-900">Respond to realistic personas</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
                 Work through uncertainty, emotion and different perspectives, not just scripted answers.
               </p>
