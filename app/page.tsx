@@ -134,9 +134,9 @@ export default function LandingPage() {
               <Image
                 src="/images/logo-full.png"
                 alt="VEWAI™ - Vet Education with AI"
-                width={260}
-                height={56}
-                className="h-full w-auto object-contain"
+                width={1024}
+                height={278}
+                className="h-full w-auto object-contain object-left"
                 priority
               />
             </div>
