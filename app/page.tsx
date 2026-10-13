@@ -524,15 +524,15 @@ export default function LandingPage() {
           <div className="max-w-5xl mx-auto rounded-3xl border border-emerald-200/90 bg-white p-8 sm:p-12 md:p-14 shadow-xl shadow-emerald-950/5">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
               {/* Prominent Figure Column */}
-              <div className="lg:col-span-5 text-center lg:text-left">
+              <div className="lg:col-span-5 text-center flex flex-col items-center justify-center">
                 <span className="inline-block text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100/70 px-3 py-1 rounded-full mb-4">
                   Research Evidence
                 </span>
                 <div className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-emerald-700 tracking-tight leading-none">
                   80 <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-700">out of 100</span>
                 </div>
-                <div className="text-base sm:text-lg font-bold text-slate-800 mt-3 leading-snug">
-                  Settled veterinary negligence cases stemmed from poor communication
+                <div className="text-base sm:text-lg font-bold text-slate-800 mt-3 leading-snug max-w-sm mx-auto text-center">
+                  Settled veterinary negligence cases stem from poor communication
                 </div>
               </div>
 
