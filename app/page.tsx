@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "@/features/auth/services/authService";
@@ -22,7 +22,6 @@ import {
   Menu,
   X,
   Send,
-  AlertTriangle,
   Lightbulb,
   Mic,
   BrainCircuit,
@@ -32,40 +31,7 @@ import {
   Info,
 } from "lucide-react";
 
-// Rotating hero message bubbles (defined statically outside component)
-// Duration is dynamically set to 7-10s depending on the length of each message
-const HERO_MESSAGES = [
-  {
-    id: 1,
-    badge: "Clinical Simulation",
-    text: "The interactive simulation platform authored by board-certified veterinary specialists",
-    icon: Stethoscope,
-    durationMs: 8500, // 8.5 seconds (medium length)
-  },
-  {
-    id: 2,
-    badge: "Pedagogical Safety",
-    text: "AI is grounded to roleplay pet owners, veterinary nurses, and team members in a closed, safe, and academically rigorous environment.",
-    icon: ShieldCheck,
-    durationMs: 10000, // 10 seconds (longest message)
-  },
-  {
-    id: 3,
-    badge: "Core Competency",
-    text: "Practice communication skills and clinical reasoning in a safe environment",
-    icon: MessageSquare,
-    durationMs: 7500, // 7.5 seconds (shorter)
-  },
-  {
-    id: 4,
-    badge: "Educational Ethos",
-    text: "Use AI to enhance learning, not to substitute it!",
-    icon: Sparkles,
-    durationMs: 7000, // 7 seconds (shortest punchy message)
-  },
-];
-
-// Student Testimonials collected during the 2025 pilot study
+// Verified Student Testimonials from 2025 pilot evaluation of an earlier VEWAI version
 const TESTIMONIALS = [
   {
     id: 1,
@@ -117,21 +83,7 @@ export default function LandingPage() {
   const [whoWeAreDropdownOpen, setWhoWeAreDropdownOpen] = useState(false);
   const [mockupTab, setMockupTab] = useState<"video" | "dialogue">("video");
 
-  // Rotating hero state
-  const [activeMessageIndex, setActiveMessageIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-
-  // Dynamic rotating hero timer: 7-10s depending on message length
-  useEffect(() => {
-    if (isPaused) return;
-    const currentDuration = HERO_MESSAGES[activeMessageIndex].durationMs || 8000;
-    const timer = setTimeout(() => {
-      setActiveMessageIndex((prev) => (prev + 1) % HERO_MESSAGES.length);
-    }, currentDuration);
-    return () => clearTimeout(timer);
-  }, [activeMessageIndex, isPaused]);
-
-  // Testimonials carousel state
+  // Testimonials carousel state (strictly manual navigation)
   const [testimonialIndex, setTestimonialIndex] = useState(0);
 
   const nextTestimonial = () => {
@@ -158,7 +110,7 @@ export default function LandingPage() {
 
   const navLinks = [
     { name: "The Challenge", href: "#challenge" },
-    { name: "The Solution", href: "#solution" },
+    { name: "How VEWAI Works", href: "#solution" },
     { name: "Educator Insights", href: "#insights" },
     { name: "Student Feedback", href: "#testimonials" },
     { name: "Our Ethos", href: "#ethos" },
@@ -232,7 +184,7 @@ export default function LandingPage() {
               href="#solution"
               className="px-3 py-2 text-sm font-medium text-slate-600 hover:text-emerald-700 transition-colors"
             >
-              The Solution
+              How VEWAI Works
             </a>
             <a
               href="#testimonials"
@@ -273,7 +225,7 @@ export default function LandingPage() {
               href="#contact"
               className="hidden lg:inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 transition-colors shadow-sm"
             >
-              <span>Register Interest</span>
+              <span>Register your school&apos;s interest</span>
             </a>
           </nav>
 
@@ -334,152 +286,64 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center space-y-6">
             {/* Status Pill Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-300/80 bg-white/80 px-4 py-1.5 text-xs sm:text-sm font-semibold text-emerald-800 shadow-sm backdrop-blur-sm">
-              <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>In Pilot Testing with UK Veterinary Students · Developed by Clinical Faculty</span>
+            {/* Eyebrow */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-300/80 bg-white/90 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-800 shadow-xs backdrop-blur-sm">
+              <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
+              <span>AI-Powered Veterinary Communication Practice</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
-              Master Clinical Communication <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-600">
-                Before Stepping into Practice.
-              </span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.15]">
+              Practise the conversations that shape veterinary care.
             </h1>
 
-            {/* ─────────────────────────────────────────────────────────
-                DYNAMIC SWAPPING MESSAGE BUBBLES
-            ────────────────────────────────────────────────────────── */}
-            <div className="max-w-2xl mx-auto pt-2">
-              <style>{`
-                @keyframes cycleProgressBar {
-                  from { width: 0%; }
-                  to { width: 100%; }
-                }
-              `}</style>
+            {/* Supporting Copy */}
+            <p className="text-base sm:text-lg md:text-xl text-slate-700 max-w-3xl mx-auto leading-relaxed">
+              VEWAI helps veterinary learners develop communication skills through realistic roleplay, structured feedback and repeat practice. From foundational interactions to complex consultations, clinical reasoning comes into focus when the scenario calls for it.
+            </p>
 
-              {/* Active animated bubble */}
-              <div
-                onMouseEnter={() => setIsPaused(true)}
-                onMouseLeave={() => setIsPaused(false)}
-                className="group relative min-h-[118px] flex items-center justify-between p-4 sm:p-5 rounded-2xl border border-emerald-200/90 bg-white shadow-lg shadow-emerald-900/5 backdrop-blur-md overflow-hidden transition-all duration-300"
-              >
-                {/* Visual cycle progress bar line */}
-                <div className="absolute top-0 left-0 right-0 h-1 bg-emerald-100 overflow-hidden">
-                  <div
-                    key={`${activeMessageIndex}-${isPaused}`}
-                    style={
-                      isPaused
-                        ? { width: "100%" }
-                        : {
-                            animation: `cycleProgressBar ${
-                              (HERO_MESSAGES[activeMessageIndex]?.durationMs || 8000) / 1000
-                            }s linear forwards`,
-                          }
-                    }
-                    className="h-full bg-emerald-500 origin-left"
-                  />
-                </div>
-
-                {/* Previous button */}
-                <button
-                  type="button"
-                  onClick={() =>
-                    setActiveMessageIndex((prev) => (prev - 1 + HERO_MESSAGES.length) % HERO_MESSAGES.length)
-                  }
-                  className="p-1.5 rounded-full hover:bg-emerald-100 text-slate-400 hover:text-emerald-800 transition-colors shrink-0 mr-1 sm:mr-2 cursor-pointer"
-                  aria-label="Previous message"
-                  title="Previous message"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </button>
-
-                {/* Message Content */}
-                <div
-                  key={activeMessageIndex}
-                  className="flex-1 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3.5 transition-all duration-300 animate-in fade-in-50 slide-in-from-bottom-2"
-                >
-                  <div className="h-11 w-11 shrink-0 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shadow-xs">
-                    {React.createElement(HERO_MESSAGES[activeMessageIndex].icon, { className: "h-5 w-5" })}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                      <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
-                        {HERO_MESSAGES[activeMessageIndex].badge}
-                      </span>
-                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded-full">
-                        {activeMessageIndex + 1} / {HERO_MESSAGES.length}
-                      </span>
-                      {isPaused && (
-                        <span className="text-[10px] text-slate-400 italic">Paused</span>
-                      )}
-                    </div>
-                    <p className="text-base sm:text-lg font-semibold text-slate-800 leading-snug">
-                      &ldquo;{HERO_MESSAGES[activeMessageIndex].text}&rdquo;
-                    </p>
-                  </div>
-                </div>
-
-                {/* Next button */}
-                <button
-                  type="button"
-                  onClick={() =>
-                    setActiveMessageIndex((prev) => (prev + 1) % HERO_MESSAGES.length)
-                  }
-                  className="p-1.5 rounded-full hover:bg-emerald-100 text-slate-400 hover:text-emerald-800 transition-colors shrink-0 ml-1 sm:ml-2 cursor-pointer"
-                  aria-label="Next message"
-                  title="Next message"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </button>
-              </div>
-
-              {/* Interactive bubble selector pills */}
-              <div className="flex flex-wrap items-center justify-center gap-2 mt-3.5">
-                {HERO_MESSAGES.map((msg, idx) => (
-                  <button
-                    key={msg.id}
-                    type="button"
-                    onClick={() => {
-                      setActiveMessageIndex(idx);
-                    }}
-                    className={`px-3 py-1 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
-                      idx === activeMessageIndex
-                        ? "bg-emerald-600 text-white shadow-xs scale-105"
-                        : "bg-white/90 text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 border border-emerald-200/80 shadow-2xs"
-                    }`}
-                  >
-                    <span
-                      className={`h-1.5 w-1.5 rounded-full ${
-                        idx === activeMessageIndex ? "bg-white animate-pulse" : "bg-emerald-500"
-                      }`}
-                    />
-                    <span>{msg.badge}</span>
-                  </button>
-                ))}
-              </div>
+            {/* Fixed Value Phrases */}
+            <div className="pt-1">
+              <p className="text-xs sm:text-sm font-semibold text-emerald-900/90 tracking-wide">
+                Realistic roleplay · Specific feedback · Repeat practice
+              </p>
             </div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+            {/* Status Note: Pilot testing secondary to value proposition */}
+            <div className="pt-1">
+              <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50/90 border border-emerald-200/80 px-3.5 py-1 text-xs font-medium text-emerald-800">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span>Currently in pilot evaluation with UK veterinary students · Authored by clinical faculty</span>
+              </span>
+            </div>
+
+            {/* Two Clear CTAs */}
+            <div className="flex flex-wrap items-center justify-center gap-4 pt-3">
               <a
                 href="#contact"
                 className="rounded-xl bg-emerald-600 px-6 py-3.5 text-base font-semibold text-white hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-600/25 hover:shadow-emerald-600/40 hover:-translate-y-0.5 cursor-pointer"
               >
-                Register Your School&apos;s Interest
+                Register your school&apos;s interest
               </a>
-              <Link
-                href={user ? "/dashboard" : "/login"}
-                className="rounded-xl border border-emerald-300 bg-white px-6 py-3.5 text-base font-semibold text-emerald-800 hover:bg-emerald-50 hover:border-emerald-400 transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-xs"
+              <a
+                href="#demo"
+                className="rounded-xl border border-emerald-300 bg-white px-6 py-3.5 text-base font-semibold text-emerald-800 hover:bg-emerald-50 hover:border-emerald-400 transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-xs cursor-pointer"
               >
-                <Lock className="h-4 w-4 text-emerald-600" />
-                <span>{user ? "Enter Dashboard" : "Platform Access"}</span>
-              </Link>
+                <Play className="h-4 w-4 fill-emerald-600 text-emerald-600" />
+                <span>See VEWAI in action</span>
+              </a>
             </div>
           </div>
 
           {/* Interactive Consult Simulator Mockup */}
-          <div className="mt-14 max-w-4xl mx-auto">
+          <div id="demo" className="mt-14 max-w-4xl mx-auto scroll-mt-24">
+            {/* Lead-in line near demonstration */}
+            <div className="text-center mb-5">
+              <p className="text-sm sm:text-base font-bold text-slate-800">
+                Choose a scenario. Have the conversation. Review the feedback. Try again.
+              </p>
+            </div>
+
             <div className="relative rounded-2xl border border-emerald-200/90 bg-white shadow-2xl shadow-emerald-950/10 overflow-hidden backdrop-blur-xl">
               {/* Mockup Header Bar with Switchable Views */}
               <div className="flex flex-wrap items-center justify-between border-b border-emerald-100 px-4 sm:px-6 py-3 bg-emerald-50/70 gap-3">
@@ -500,7 +364,7 @@ export default function LandingPage() {
                       }`}
                     >
                       <Play className="h-3 w-3 fill-current" />
-                      <span>Live App Recording</span>
+                      <span>Live Simulation Recording</span>
                     </button>
                     <button
                       type="button"
@@ -512,7 +376,7 @@ export default function LandingPage() {
                       }`}
                     >
                       <MessageSquare className="h-3 w-3" />
-                      <span>Consult Breakdown</span>
+                      <span>Consultation &amp; Feedback Sample</span>
                     </button>
                   </div>
                 </div>
@@ -520,7 +384,7 @@ export default function LandingPage() {
                 <div className="flex items-center gap-2">
                   <span className="inline-flex items-center gap-1.5 rounded-md bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 border border-emerald-300">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-600 animate-pulse" />
-                    Equine Colic Case #04
+                    Clinical Consultation · Barnaby
                   </span>
                 </div>
               </div>
@@ -536,20 +400,20 @@ export default function LandingPage() {
                     playsInline
                     className="w-full h-auto aspect-video object-cover"
                   />
-                  <div className="p-3.5 bg-white border-t border-emerald-100 flex items-center justify-between text-xs text-slate-600">
-                    <span>Authentic recording from the VewAI clinical simulator environment</span>
+                  <div className="p-3.5 bg-white border-t border-emerald-100 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-600">
+                    <span>Recording of active roleplay session within the VEWAI learning environment</span>
                     <button
                       type="button"
                       onClick={() => setMockupTab("dialogue")}
                       className="text-emerald-700 hover:underline font-semibold cursor-pointer"
                     >
-                      Inspect dialogue analysis →
+                      View dialogue and structured feedback breakdown →
                     </button>
                   </div>
                 </div>
               ) : (
                 <div className="p-6 md:p-8 space-y-6 bg-white">
-                  {/* Dialogue 1: The AI Pet / Horse Owner */}
+                  {/* Step 1: Character interaction */}
                   <div className="flex items-start gap-4">
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber-500 to-orange-600 text-white font-bold text-sm shadow-md">
                       SO
@@ -559,7 +423,7 @@ export default function LandingPage() {
                         <span className="text-xs font-bold text-amber-800">
                           Sarah (Barnaby&apos;s Owner)
                         </span>
-                        <span className="text-[10px] text-slate-500">Anxious & Distressed</span>
+                        <span className="text-[10px] text-slate-500 font-medium">Anxious &amp; Distressed</span>
                       </div>
                       <div className="rounded-2xl rounded-tl-none bg-amber-50/80 p-4 text-sm text-slate-900 border border-amber-200/80 leading-relaxed shadow-2xs">
                         &ldquo;Doctor, Barnaby hasn&apos;t eaten since yesterday afternoon and he kept rolling in the paddock. When I checked him this morning he broke out into a sweat. I&apos;m terrified... is he going to need surgery?&rdquo;
@@ -567,63 +431,63 @@ export default function LandingPage() {
                     </div>
                   </div>
 
-                  {/* Dialogue 2: The Veterinary Student */}
+                  {/* Step 2: Learner verbal response */}
                   <div className="flex items-start gap-4 flex-row-reverse">
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white font-bold text-sm shadow-md">
-                      VS
+                      VL
                     </div>
                     <div className="space-y-1.5 max-w-xl text-right">
                       <div className="flex items-center justify-end gap-2">
                         <span className="text-xs font-bold text-emerald-800">
-                          Veterinary Student
+                          Veterinary Learner
                         </span>
-                        <span className="text-[10px] text-slate-500">Voice Input Active</span>
+                        <span className="text-[10px] text-slate-500 font-medium">Voice / Text Interaction</span>
                       </div>
                       <div className="rounded-2xl rounded-tr-none bg-emerald-50 border border-emerald-300 p-4 text-sm text-slate-900 text-left leading-relaxed shadow-2xs">
-                        &ldquo;I completely understand how alarming this is, Sarah. Let&apos;s take a deep breath together. I will examine Barnaby right now to assess his heart rate, gut sounds, and pain level, and I&apos;ll explain every step to you before we make any decisions.&rdquo;
+                        &ldquo;I completely understand how alarming this is, Sarah. Let&apos;s take a deep breath together. I will examine Barnaby right now to assess his vital signs and pain level, and I will explain every step to you before we make any decisions.&rdquo;
                       </div>
                     </div>
                   </div>
 
-                  {/* Real-time Pedagogical Evaluation Box */}
+                  {/* Step 3: Structured debrief feedback */}
                   <div className="rounded-xl border border-emerald-200 bg-emerald-50/70 p-4 md:p-5 mt-4">
                     <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
                       <div className="flex items-center gap-2">
                         <BrainCircuit className="h-4 w-4 text-emerald-700" />
                         <span className="text-xs font-bold uppercase tracking-wider text-emerald-900">
-                          Immediate Pedagogical Assessment · Calgary-Cambridge Framework
+                          Structured Consultation Feedback · Calgary-Cambridge Framework
                         </span>
                       </div>
-                      <span className="text-xs font-bold text-emerald-800 bg-emerald-200/70 px-2 py-0.5 rounded">
-                        Empathy Score: Exemplary
+                      <span className="text-xs font-semibold text-emerald-800 bg-emerald-200/70 px-2 py-0.5 rounded">
+                        Formative Debrief
                       </span>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                       <div className="rounded-lg bg-white p-3 border border-emerald-100 shadow-2xs">
                         <div className="font-bold text-slate-900 mb-1 flex items-center gap-1.5">
                           <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
-                          Active Listening
+                          Building Rapport
                         </div>
-                        <p className="text-slate-600">
-                          Successfully acknowledged owner anxiety before requesting physical exam details.
+                        <p className="text-slate-600 leading-normal">
+                          Acknowledged client anxiety directly before moving into clinical history and examination.
                         </p>
                       </div>
                       <div className="rounded-lg bg-white p-3 border border-emerald-100 shadow-2xs">
                         <div className="font-bold text-slate-900 mb-1 flex items-center gap-1.5">
                           <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
-                          Diagnostic Pathway
+                          Information Gathering
                         </div>
-                        <p className="text-slate-600">
-                          Appropriately prioritized vital signs and pain score evaluation for colic triage.
+                        <p className="text-slate-600 leading-normal">
+                          Clear open questions established onset and progression without medical jargon.
                         </p>
                       </div>
                       <div className="rounded-lg bg-white p-3 border border-emerald-100 shadow-2xs">
                         <div className="font-bold text-slate-900 mb-1 flex items-center gap-1.5">
                           <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
-                          Transparency
+                          Explanation &amp; Next Steps
                         </div>
-                        <p className="text-slate-600">
-                          Reassured the client by setting clear expectations and collaborative consent.
+                        <p className="text-slate-600 leading-normal">
+                          Set transparent expectations for the physical exam and reassured the client regarding decision-making.
                         </p>
                       </div>
                     </div>
@@ -631,156 +495,188 @@ export default function LandingPage() {
                 </div>
               )}
             </div>
+
+            {/* Short verified student quotation immediately below demonstration */}
+            <div className="mt-4 rounded-xl border border-emerald-100 bg-white/90 p-4 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-3 shadow-2xs">
+              <div className="flex items-center gap-3">
+                <Quote className="h-4 w-4 text-emerald-600 shrink-0" />
+                <p className="text-xs sm:text-sm italic text-slate-700">
+                  &ldquo;Awesome tool, user friendly and engaging.&rdquo;
+                </p>
+              </div>
+              <span className="text-[11px] font-semibold text-slate-500 shrink-0">
+                — Veterinary student, 2025 pilot of an earlier VEWAI version
+              </span>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 1: THE URGENT NEED (80% COMMUNICATION CRISIS)
+          SECTION 1: THE CHALLENGE
       ────────────────────────────────────────────────────────────── */}
       <section id="challenge" className="py-20 border-t border-emerald-100/90 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
+          <div className="max-w-3xl mx-auto text-center space-y-4 mb-14">
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-              The Reality of Veterinary Practice
+              The Need for Practice
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              Why Communication Skills Are the Make-or-Break Competency
+              Communication is a clinical skill. It needs practice.
             </h2>
-            <p className="text-slate-600 text-base sm:text-lg">
-              Veterinary school prepares students extensively in pathology, pharmacology, and surgery. But when new graduates enter clinics, their greatest challenge isn&apos;t knowing the medicine—it&apos;s communicating with the client.
+            <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
+              Veterinary learners need opportunities to ask questions, listen, explain, respond to emotion and work with colleagues. These skills develop through practice, feedback and reflection, from the first years of training onwards.
             </p>
           </div>
 
-          {/* Stat Banner */}
-          <div className="max-w-4xl mx-auto rounded-2xl border border-amber-300 bg-gradient-to-br from-amber-50/90 via-white to-amber-50/60 p-8 md:p-10 shadow-lg shadow-amber-900/5 mb-12">
-            <div className="flex flex-col md:flex-row items-center gap-8">
-              <div className="text-center md:text-left shrink-0">
-                <div className="text-6xl sm:text-7xl font-extrabold text-amber-600 tracking-tight">
-                  80%
-                </div>
-                <div className="text-xs font-bold uppercase tracking-wider text-amber-800 mt-1">
-                  Of Investigated Cases
-                </div>
-              </div>
-              <div className="space-y-3 border-t md:border-t-0 md:border-l border-amber-200 pt-6 md:pt-0 md:pl-8">
-                <h3 className="text-xl font-bold text-slate-900">
-                  Communication problems are a contributing factor in 80% of veterinary negligence and complaint cases.
-                </h3>
-                <p className="text-sm text-slate-700 leading-relaxed">
-                  Published research analyzing settled veterinary malpractice cases revealed that breakdown in communication—between clinicians and animal owners, as well as within clinical teams—is the predominant driver of complaints.
-                </p>
-                <div className="pt-1">
-                  <a
-                    href="https://doi.org/10.1002/vetr.1068"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 hover:underline"
-                  >
-                    <span>
-                      Russell, Mossop, Forbes, &amp; Oxtoby (2022) · Veterinary Record
-                    </span>
-                    <ExternalLink className="h-3 w-3" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* 3 Core Challenges */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-6 space-y-3 shadow-2xs hover:border-emerald-300 hover:shadow-md transition-all">
-              <div className="h-10 w-10 rounded-xl bg-red-100 flex items-center justify-center text-red-600">
-                <AlertTriangle className="h-5 w-5" />
-              </div>
-              <h4 className="text-lg font-bold text-slate-900">The Actor Simulation Bottleneck</h4>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                Actor-based roleplay is difficult to coordinate and prohibitively expensive. As a result, students typically get only 10–15 minutes of live client practice per term.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-6 space-y-3 shadow-2xs hover:border-emerald-300 hover:shadow-md transition-all">
-              <div className="h-10 w-10 rounded-xl bg-amber-100 flex items-center justify-center text-amber-700">
+          {/* 3 Concise Challenge Themes */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-10">
+            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-7 space-y-3 shadow-2xs hover:border-emerald-300 hover:shadow-md transition-all">
+              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <HeartHandshake className="h-5 w-5" />
               </div>
-              <h4 className="text-lg font-bold text-slate-900">High-Stakes Emotional Pressure</h4>
+              <h3 className="text-lg font-bold text-slate-900">Practice before the pressure</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Breaking bad news, discussing sudden euthanasia, and negotiating financial constraints require seasoned emotional intelligence that textbook study cannot build.
+                Rehearse conversations before facing them in placements or practice.
               </p>
             </div>
 
-            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-6 space-y-3 shadow-2xs hover:border-emerald-300 hover:shadow-md transition-all">
+            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-7 space-y-3 shadow-2xs hover:border-emerald-300 hover:shadow-md transition-all">
+              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
+                <MessageSquare className="h-5 w-5" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900">Respond to real people</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Work through uncertainty, emotion and different perspectives, not just scripted answers.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-7 space-y-3 shadow-2xs hover:border-emerald-300 hover:shadow-md transition-all">
               <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <Stethoscope className="h-5 w-5" />
               </div>
-              <h4 className="text-lg font-bold text-slate-900">Clinical Reasoning in Action</h4>
+              <h3 className="text-lg font-bold text-slate-900">Connect communication to care</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Students need to synthesize symptoms, diagnostic tests, and owner constraints in real time—without fear of causing harm to a live animal.
+                As learners progress, use conversation to gather information, discuss options and support clinical decisions.
               </p>
+            </div>
+          </div>
+
+          {/* Smaller evidence note below cards */}
+          <div className="max-w-3xl mx-auto rounded-xl border border-emerald-200/80 bg-emerald-50/50 p-4 sm:p-5 text-xs text-slate-700 flex items-start gap-3.5 shadow-2xs">
+            <Info className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <span className="font-bold text-slate-900 text-xs block">
+                Evidence note
+              </span>
+              <p className="leading-relaxed text-slate-600">
+                In a study of 100 settled cases of alleged professional negligence involving canine patients, communication problems were identified in 80 cases.
+              </p>
+              <div>
+                <a
+                  href="https://doi.org/10.1002/vetr.1068"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 font-semibold text-emerald-700 hover:text-emerald-800 hover:underline"
+                >
+                  <span>Russell, Mossop, Forbes, &amp; Oxtoby (2022) · Veterinary Record (DOI: 10.1002/vetr.1068)</span>
+                  <ExternalLink className="h-3 w-3" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 2: THE SOLUTION (CLOSED, SPECIALIST-AUTHORED AI)
+          SECTION 2: THE SOLUTION
       ────────────────────────────────────────────────────────────── */}
       <section id="solution" className="py-20 border-t border-emerald-100/90 bg-[#f4fbf7]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-white px-3 py-1 rounded-full border border-emerald-200">
-              The VewAI Solution
+              How VEWAI Works
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              A Closed, Safe Simulation Environment for Veterinary Education
+              Realistic conversations. Useful feedback. Another chance to practise.
             </h2>
-            <p className="text-slate-600 text-base sm:text-lg">
-              We leverage purpose-trained artificial intelligence to roleplay animal owners, nurses, and clinical colleagues. Every scenario operates within strict pedagogical guardrails authored and verified by board-certified veterinary specialists.
+            <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
+              Learners interact with AI roleplay characters in educator-designed scenarios. They make choices, respond to what they hear and receive feedback they can use in their next attempt.
             </p>
           </div>
 
+          {/* 3 Simple Steps */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
+            <div className="rounded-2xl border border-emerald-200/90 bg-white p-7 space-y-3 shadow-xs hover:border-emerald-300 transition-all">
+              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-800 font-bold text-base">
+                1
+              </div>
+              <h3 className="text-lg font-bold text-slate-900">Choose a scenario</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Start with a learning objective suited to the learner&apos;s stage.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-emerald-200/90 bg-white p-7 space-y-3 shadow-xs hover:border-emerald-300 transition-all">
+              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-800 font-bold text-base">
+                2
+              </div>
+              <h3 className="text-lg font-bold text-slate-900">Have the conversation</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Engage with an owner or member of the veterinary team and respond as the interaction develops.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-emerald-200/90 bg-white p-7 space-y-3 shadow-xs hover:border-emerald-300 transition-all">
+              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-800 font-bold text-base">
+                3
+              </div>
+              <h3 className="text-lg font-bold text-slate-900">Review and repeat</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                See specific feedback, reflect on your approach and try again.
+              </p>
+            </div>
+          </div>
+
+          {/* Supporting Implementation Details */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            {/* Feature 1 */}
-            <div className="rounded-2xl border border-emerald-100 bg-white p-6 space-y-3 hover:border-emerald-300 hover:shadow-md transition-all hover:-translate-y-1 shadow-2xs">
-              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
+            <div className="rounded-2xl border border-emerald-100 bg-white/90 p-6 space-y-2.5 shadow-2xs">
+              <div className="h-9 w-9 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <ShieldCheck className="h-5 w-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Specialist-Authored Cases</h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                No unconstrained AI hallucinations. All patient histories, laboratory findings, and diagnostic branches are meticulously crafted by European Specialists.
+              <h4 className="text-sm font-bold text-slate-900">Specialist-Authored Scenarios</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Clinical cases and background details are authored by veterinary specialists to reflect realistic practice.
               </p>
             </div>
 
-            {/* Feature 2 */}
-            <div className="rounded-2xl border border-emerald-100 bg-white p-6 space-y-3 hover:border-emerald-300 hover:shadow-md transition-all hover:-translate-y-1 shadow-2xs">
-              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
+            <div className="rounded-2xl border border-emerald-100 bg-white/90 p-6 space-y-2.5 shadow-2xs">
+              <div className="h-9 w-9 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <Users className="h-5 w-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Dynamic Roleplay Personas</h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Interact with angry, anxious, or budget-limited owners. Consult with veterinary nurses and technicians to mirror authentic clinical workflow.
+              <h4 className="text-sm font-bold text-slate-900">Roleplay Characters</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Learners interact with distinct owner profiles and clinical colleagues representing different communication challenges.
               </p>
             </div>
 
-            {/* Feature 3 */}
-            <div className="rounded-2xl border border-emerald-100 bg-white p-6 space-y-3 hover:border-emerald-300 hover:shadow-md transition-all hover:-translate-y-1 shadow-2xs">
-              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
+            <div className="rounded-2xl border border-emerald-100 bg-white/90 p-6 space-y-2.5 shadow-2xs">
+              <div className="h-9 w-9 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <Mic className="h-5 w-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Voice &amp; Avatar Immersion</h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Students practice verbal communication using live voice input. The AI responds with expressive avatars, replicating the pressure of face-to-face consults.
+              <h4 className="text-sm font-bold text-slate-900">Spoken &amp; Written Practice</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Supports speech input and text dialogue, allowing learners to practise realistic spoken pacing.
               </p>
             </div>
 
-            {/* Feature 4 */}
-            <div className="rounded-2xl border border-emerald-100 bg-white p-6 space-y-3 hover:border-emerald-300 hover:shadow-md transition-all hover:-translate-y-1 shadow-2xs">
-              <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
+            <div className="rounded-2xl border border-emerald-100 bg-white/90 p-6 space-y-2.5 shadow-2xs">
+              <div className="h-9 w-9 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <Sparkles className="h-5 w-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Unlimited Safe Practice</h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Students can practice cases 24/7 at their own pace. Mistakes become formative learning opportunities rather than real-world malpractice risks.
+              <h4 className="text-sm font-bold text-slate-900">Repeatable Practice</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Learners can revisit cases at their own pace to test different approaches and apply feedback directly.
               </p>
             </div>
           </div>
@@ -788,20 +684,88 @@ export default function LandingPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 3: EDUCATOR INSIGHTS & COHORT PROGRESSION
+          SECTION 2B: COMPACT LEARNING-PATH SECTION
+      ────────────────────────────────────────────────────────────── */}
+      <section className="py-20 border-t border-emerald-100/90 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto text-center space-y-4 mb-14">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+              Curriculum Progression
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              Communication practice that grows with the learner.
+            </h2>
+            <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
+              VEWAI supports learners from early introductory training through clinical rotations, introducing clinical complexity as scenarios require it.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {/* Stage 1: Foundations */}
+            <div className="rounded-2xl border border-dashed border-emerald-300 bg-[#fbfdfc] p-7 space-y-3 relative shadow-2xs">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100/70 px-2.5 py-0.5 rounded-md">
+                  Stage 1
+                </span>
+                <span className="text-[11px] font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">
+                  In development
+                </span>
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 pt-1">Foundations</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Opening conversations, listening, asking questions and explaining clearly.
+              </p>
+            </div>
+
+            {/* Stage 2: Applied Conversations */}
+            <div className="rounded-2xl border border-dashed border-emerald-300 bg-[#fbfdfc] p-7 space-y-3 relative shadow-2xs">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100/70 px-2.5 py-0.5 rounded-md">
+                  Stage 2
+                </span>
+                <span className="text-[11px] font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">
+                  In development
+                </span>
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 pt-1">Applied conversations</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Responding to concerns, discussing options and communicating within the veterinary team.
+              </p>
+            </div>
+
+            {/* Stage 3: Complex Clinical Scenarios */}
+            <div className="rounded-2xl border border-emerald-300 bg-white p-7 space-y-3 relative shadow-sm">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100/70 px-2.5 py-0.5 rounded-md">
+                  Stage 3
+                </span>
+                <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+                  Available in pilot
+                </span>
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 pt-1">Complex clinical scenarios</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Bringing communication and clinical reasoning together when decisions become more demanding.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION 3: FEEDBACK & EDUCATOR INSIGHTS
       ────────────────────────────────────────────────────────────── */}
       <section id="insights" className="py-20 border-t border-emerald-100/90 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-              Dual-Level Pedagogical Feedback
+              Structured Debrief
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              Actionable Feedback for Students. <br />
-              Cohort-Level Intelligence for Educators.
+              Feedback learners can use. Insights educators can act on.
             </h2>
-            <p className="text-slate-600 text-base sm:text-lg">
-              VewAI doesn&apos;t just score consultations—it bridges the gap between individual practice and classroom teaching.
+            <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
+              VEWAI turns a practice conversation into specific points for reflection. Educators can use patterns across learners to guide teaching and support.
             </p>
           </div>
 
@@ -813,70 +777,74 @@ export default function LandingPage() {
                   <GraduationCap className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900">For the Veterinary Student</h3>
-                  <p className="text-xs text-emerald-800 font-semibold">Immediate Consultation Debrief</p>
+                  <h3 className="text-xl font-bold text-slate-900">For the Veterinary Learner</h3>
+                  <p className="text-xs text-emerald-800 font-semibold">Immediate debrief after each conversation</p>
                 </div>
               </div>
               <ul className="space-y-3.5 text-sm text-slate-700">
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
-                  <span>
-                    <strong className="text-slate-900">Calgary-Cambridge Scoring:</strong> Objective assessment of rapport building, active listening, and information gathering.
-                  </span>
+                  <span>See what worked in the conversation.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
-                  <span>
-                    <strong className="text-slate-900">Clinical Reasoning Breakdown:</strong> Review whether the diagnostic differential diagnosis matched the physiological signs revealed.
-                  </span>
+                  <span>Identify a specific communication skill to improve.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
-                  <span>
-                    <strong className="text-slate-900">Personalized Action Points:</strong> Specific suggestions on phrasing, pacing, and emotional de-escalation before the next attempt.
+                  <span>Try the scenario again and apply the feedback.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
+                  <span className="text-slate-600 text-xs leading-relaxed">
+                    <em>For scenarios that assess clinical reasoning:</em> Review diagnostic decision paths and investigation choices alongside communication feedback.
                   </span>
                 </li>
               </ul>
+              <div className="pt-2 border-t border-emerald-100/80">
+                <p className="text-[11px] text-slate-500">
+                  Feedback rubrics are informed by established clinical communication principles, including the Calgary–Cambridge guide.
+                </p>
+              </div>
             </div>
 
-            {/* Educator Analytics Card */}
-            <div className="rounded-2xl border border-emerald-200/90 bg-gradient-to-br from-emerald-50 via-white to-teal-50/50 p-8 space-y-5 shadow-md shadow-emerald-900/5">
+            {/* Educator Insights Card */}
+            <div className="rounded-2xl border border-emerald-200/90 bg-gradient-to-br from-emerald-50/60 via-white to-teal-50/40 p-8 space-y-5 shadow-xs">
               <div className="flex items-center gap-3">
                 <div className="h-11 w-11 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-xs">
                   <BarChart3 className="h-5 w-5" />
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-slate-900">For Veterinary Educators</h3>
-                  <p className="text-xs text-emerald-800 font-bold">Cohort &amp; Curriculum Intelligence</p>
+                  <p className="text-xs text-emerald-800 font-bold">Cohort feedback &amp; teaching support</p>
                 </div>
               </div>
               <ul className="space-y-3.5 text-sm text-slate-700">
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
-                  <span>
-                    <strong className="text-slate-900">Cohort Progress Monitoring:</strong> Track overall class performance trends across communication domains and species categories.
-                  </span>
+                  <span>See where learners are progressing or struggling.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
-                  <span>
-                    <strong className="text-slate-900">Highlighting Knowledge Gaps:</strong> Automatically flags specific Learning Objectives (LOs) where multiple students struggle.
-                  </span>
+                  <span>Use scenario results to focus teaching and discussion.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
-                  <span>
-                    <strong className="text-slate-900">Targeted Teaching Reinforcement:</strong> Faculty can adapt lecture content and tutorials based on real simulation analytics before clinic rotations.
-                  </span>
+                  <span>Align practice with course learning objectives.</span>
                 </li>
               </ul>
+              <div className="pt-2 border-t border-emerald-100/80">
+                <span className="inline-block text-[11px] font-semibold text-emerald-800 bg-emerald-100/70 px-2 py-0.5 rounded">
+                  Cohort analytics dashboard in active pilot testing
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 4: STUDENT TESTIMONIALS & PILOT EVALUATION
+          SECTION 4: STUDENT FEEDBACK & PILOT EVALUATION
       ────────────────────────────────────────────────────────────── */}
       <section id="testimonials" className="py-20 border-t border-emerald-100/90 bg-[#f4fbf7]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -885,20 +853,20 @@ export default function LandingPage() {
               Pilot Evaluation Feedback
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              What Veterinary Students Say About VEWAI
+              Student feedback on earlier-version testing
             </h2>
-            <p className="text-slate-600 text-base sm:text-lg">
-              Real feedback from veterinary students who tested an earlier version of our AI-powered clinical simulation platform.
+            <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
+              Verbatim feedback collected during a 2025 student evaluation of an earlier VEWAI prototype at the University of Nottingham.
             </p>
           </div>
 
-          {/* Carousel Container */}
+          {/* Carousel Container (Manual Navigation Only) */}
           <div className="max-w-6xl mx-auto">
             {/* Top Carousel Controls Bar */}
             <div className="flex items-center justify-between mb-6 px-1">
               <div className="flex items-center gap-2">
                 <span className="text-xs font-semibold text-emerald-800 bg-emerald-100/70 px-2.5 py-0.5 rounded-full">
-                  Showing {testimonialIndex + 1} to {Math.min(testimonialIndex + 3, TESTIMONIALS.length)} of {TESTIMONIALS.length} Comments
+                  Showing {testimonialIndex + 1} to {Math.min(testimonialIndex + 3, TESTIMONIALS.length)} of {TESTIMONIALS.length} quotations
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -943,8 +911,8 @@ export default function LandingPage() {
                         </span>
                       </div>
 
-                      {/* Quotation text */}
-                      <p className="text-base font-semibold text-slate-800 leading-relaxed italic my-2">
+                      {/* Quotation text (Verbatim student words preserved) */}
+                      <p className="text-base font-medium text-slate-800 leading-relaxed italic my-2">
                         &ldquo;{item.quote}&rdquo;
                       </p>
                     </div>
@@ -952,12 +920,12 @@ export default function LandingPage() {
                     {/* Attribution footer */}
                     <div className="pt-5 mt-4 border-t border-emerald-100/80">
                       <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 shrink-0 rounded-full bg-gradient-to-br from-emerald-500 to-teal-700 text-white font-bold text-xs flex items-center justify-center shadow-xs">
+                        <div className="h-9 w-9 shrink-0 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center border border-emerald-200">
                           VS
                         </div>
                         <div>
                           <div className="text-sm font-bold text-slate-900">{item.author}</div>
-                          <div className="text-[11px] text-emerald-700 font-semibold">
+                          <div className="text-[11px] text-slate-600 font-medium">
                             {item.affiliation}
                           </div>
                         </div>
@@ -986,15 +954,15 @@ export default function LandingPage() {
               ))}
             </div>
 
-            {/* Scientific Transparency Disclosure */}
-            <div className="max-w-3xl mx-auto mt-10 rounded-2xl border border-emerald-200/90 bg-white/90 p-4 sm:p-5 text-xs text-slate-600 flex items-start gap-3.5 shadow-2xs">
+            {/* Evaluation & Research Context Note */}
+            <div className="max-w-3xl mx-auto mt-10 rounded-2xl border border-emerald-200/90 bg-white p-5 text-xs text-slate-700 flex items-start gap-3.5 shadow-2xs">
               <Info className="h-5 w-5 text-emerald-700 shrink-0 mt-0.5" />
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <span className="font-bold text-slate-900 text-xs block">
-                  Scientific Transparency &amp; Study Context
+                  Evaluation and research note
                 </span>
                 <p className="leading-relaxed text-slate-600">
-                  These quotations were collected during a 2025 student evaluation of an earlier version of VEWAI. Feedback from this study has informed subsequent platform development.
+                  These quotations represent selected feedback collected during a 2025 student evaluation of an earlier VEWAI version. They do not claim universal consensus or clinical outcome improvements. Full study findings and academic publications will be shared following formal peer review.
                 </p>
               </div>
             </div>
@@ -1003,50 +971,50 @@ export default function LandingPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 5: OUR ETHOS & PEDAGOGY
+          SECTION 5: OUR ETHOS
       ────────────────────────────────────────────────────────────── */}
       <section id="ethos" className="py-20 border-t border-emerald-100/90 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-white px-3 py-1 rounded-full border border-emerald-200">
-              Our Educational Ethos
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+              Our Ethos
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              Built on Pedagogical Safety, Integrity, and Global Access
+              Designed by veterinary educators for safe, repeatable practice.
             </h2>
-            <p className="text-slate-600 text-base sm:text-lg">
-              VewAI was conceived from inside the veterinary classroom, designed not to replace educators, but to equip them with scalable tools.
+            <p className="text-slate-700 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              VEWAI gives learners space to rehearse, reflect and improve without involving real clients or patients. Educators remain central to scenario design, teaching and interpretation of feedback.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="rounded-2xl border border-emerald-100 bg-white p-6 space-y-3 shadow-2xs hover:shadow-md transition-all">
+            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-7 space-y-3 shadow-2xs hover:shadow-md transition-all">
               <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <ShieldCheck className="h-5 w-5" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900">Safe-to-Fail Learning</h3>
+              <h3 className="text-lg font-bold text-slate-900">Safe rehearsal space</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                True competence requires experimenting with communication styles. Our simulator creates a psychologically safe environment where mistakes lead to reflection rather than real-world repercussions.
+                Learners can experiment with phrasing and active listening in low-stakes scenarios, using mistakes as opportunities to reflect rather than causing real distress.
               </p>
             </div>
 
-            <div className="rounded-2xl border border-emerald-100 bg-white p-6 space-y-3 shadow-2xs hover:shadow-md transition-all">
+            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-7 space-y-3 shadow-2xs hover:shadow-md transition-all">
               <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <HeartHandshake className="h-5 w-5" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900">Equitable Access</h3>
+              <h3 className="text-lg font-bold text-slate-900">Broad student access</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Simulation should not be reserved only for wealthy institutions with large actor budgets. We are committed to making high-fidelity practice accessible to veterinary schools globally.
+                Supplemental conversational practice can be accessed by all students throughout the academic year, not only during occasional actor-based sessions.
               </p>
             </div>
 
-            <div className="rounded-2xl border border-emerald-100 bg-white p-6 space-y-3 shadow-2xs hover:shadow-md transition-all">
+            <div className="rounded-2xl border border-emerald-100 bg-[#f9fdfb] p-7 space-y-3 shadow-2xs hover:shadow-md transition-all">
               <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                 <Lightbulb className="h-5 w-5" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900">Faculty-Empowered</h3>
+              <h3 className="text-lg font-bold text-slate-900">Educator-led teaching</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                AI handles repetitive baseline simulation practice so clinical faculty can dedicate their valuable time to personalized mentorship, advanced procedural training, and bedside rounds.
+                Technology supports self-directed practice, freeing educators to focus contact time on small-group discussions, clinical reasoning, and personalized coaching.
               </p>
             </div>
           </div>
@@ -1160,10 +1128,10 @@ export default function LandingPage() {
                 <span>Early Academic Partnership</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                Register Your University or School
+                Bring VEWAI to your veterinary school.
               </h2>
-              <p className="text-sm text-slate-600">
-                We are currently collaborating with veterinary schools and educators for our initial academic evaluation cohorts. Reach out to request a faculty presentation or pilot access.
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Tell us about your teaching needs and we&apos;ll discuss how VEWAI could support your learners, including current pilot opportunities.
               </p>
             </div>
 
@@ -1172,9 +1140,9 @@ export default function LandingPage() {
                 <div className="h-14 w-14 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto shadow-sm">
                   <CheckCircle2 className="h-8 w-8" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900">Thank you for your interest!</h3>
-                <p className="text-sm text-slate-700 max-w-md mx-auto">
-                  Our clinical education leads (Dr. Marco Duz &amp; Dr. Ignacio Corradini) have received your details. We will be in touch shortly via <strong>{formData.email}</strong> to coordinate a walkthrough.
+                <h3 className="text-xl font-bold text-slate-900">Thank you for registering your interest!</h3>
+                <p className="text-sm text-slate-700 max-w-md mx-auto leading-relaxed">
+                  Our clinical education leads (Dr Marco Duz &amp; Dr Ignacio Corradini) have received your details. We will be in touch via <strong>{formData.email}</strong> to discuss your learners&apos; needs and current pilot opportunities.
                 </p>
                 <div className="pt-2">
                   <button
@@ -1281,7 +1249,7 @@ export default function LandingPage() {
                   className="w-full rounded-xl bg-emerald-600 py-3.5 text-sm font-bold text-white hover:bg-emerald-700 transition-all shadow-md shadow-emerald-600/25 flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Send className="h-4 w-4" />
-                  <span>Submit Early Access Request</span>
+                  <span>Register your school&apos;s interest</span>
                 </button>
 
                 <p className="text-[11px] text-center text-slate-500 pt-2">
@@ -1321,7 +1289,7 @@ export default function LandingPage() {
               The Challenge
             </a>
             <a href="#solution" className="hover:text-emerald-700 transition-colors">
-              The Solution
+              How VEWAI Works
             </a>
             <a href="#testimonials" className="hover:text-emerald-700 transition-colors">
               Student Feedback
