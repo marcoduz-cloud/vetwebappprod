@@ -1086,15 +1086,6 @@ export default function LandingPage() {
                     priority
                   />
                 </div>
-                <div className="p-4 pt-3.5 space-y-2">
-                  <div className="flex items-center gap-2 text-xs font-bold text-emerald-800">
-                    <span className="inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span>In the Field · University of Nottingham</span>
-                  </div>
-                  <p className="text-xs text-slate-700 leading-relaxed font-medium">
-                    Dr. Marco Duz and Dr. Ignacio Corradini in clinical teaching. Long-standing academic colleagues, European Veterinary Specialists, and educators united by a passion for communication training in veterinary medicine.
-                  </p>
-                </div>
               </div>
 
               {/* Verified Credentials Summary Card */}
