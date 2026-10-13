@@ -525,14 +525,11 @@ export default function LandingPage() {
                   Research Evidence
                 </span>
                 <div className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-emerald-700 tracking-tight leading-none">
-                  80 <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-700">of 100</span>
+                  80 <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-700">out of 100</span>
                 </div>
-                <div className="text-lg sm:text-xl font-bold text-slate-800 mt-2">
-                  cases
+                <div className="text-base sm:text-lg font-bold text-slate-800 mt-3 leading-snug">
+                  Settled veterinary negligence cases stemmed from poor communication
                 </div>
-                <p className="text-xs text-slate-500 mt-2">
-                  Settled veterinary negligence cases examined
-                </p>
               </div>
 
               {/* Context & Description Column */}
