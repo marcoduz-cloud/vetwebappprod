@@ -166,25 +166,17 @@ export default function LandingPage() {
       ────────────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-50 w-full border-b border-emerald-100/80 bg-white/90 backdrop-blur-md shadow-xs">
         <div className="container mx-auto flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
-          {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative h-11 w-11 transition-transform duration-300 group-hover:scale-105">
+          {/* Brand Logo - Official VEWAI™ Wordmark */}
+          <Link href="/" className="flex items-center group py-1" title="VEWAI™ - Veterinary Education with AI">
+            <div className="relative h-10 w-44 sm:h-11 sm:w-48 transition-transform duration-300 group-hover:scale-[1.02]">
               <Image
-                src="/images/logo-v.png"
-                alt="VEWAI Logo"
-                width={44}
-                height={44}
-                className="h-full w-full object-contain"
+                src="/images/logo-wordmark.png"
+                alt="VEWAI™"
+                width={220}
+                height={42}
+                className="h-full w-auto object-contain"
                 priority
               />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-0.5">
-                Vew<span className="text-emerald-600 font-extrabold">Ai</span>
-              </span>
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-emerald-800/80">
-                Clinical Simulation
-              </span>
             </div>
           </Link>
 
@@ -1295,52 +1287,48 @@ export default function LandingPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          FOOTER (Sophisticated Dark Spruce & Emerald)
+          FOOTER (Clean Mint with Official Brand Mark & Tagline)
       ────────────────────────────────────────────────────────────── */}
-      <footer className="border-t border-[#0f342d] bg-[#071f1a] py-12 text-slate-300 text-xs">
+      <footer className="border-t border-emerald-200 bg-[#f4fbf7] py-12 text-slate-600 text-xs">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <Image
-              src="/images/logo-v.png"
-              alt="VEWAI Logo"
-              width={28}
-              height={28}
-              className="h-7 w-7 object-contain opacity-90"
-            />
-            <div className="flex flex-col">
-              <span className="font-bold text-white text-sm">VEWAI Ltd</span>
-              <span className="text-[11px] text-emerald-400/90">
-                Veterinary Education with Artificial Intelligence
-              </span>
+            <div className="h-10 w-48 sm:h-11 sm:w-52">
+              <Image
+                src="/images/logo-full.png"
+                alt="VEWAI™ - Vet Education with AI"
+                width={220}
+                height={52}
+                className="h-full w-auto object-contain"
+              />
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-6 text-slate-400">
-            <a href="#challenge" className="hover:text-emerald-400 transition-colors">
+          <div className="flex flex-wrap items-center gap-6 text-slate-600 font-medium">
+            <a href="#challenge" className="hover:text-emerald-700 transition-colors">
               The Challenge
             </a>
-            <a href="#solution" className="hover:text-emerald-400 transition-colors">
+            <a href="#solution" className="hover:text-emerald-700 transition-colors">
               The Solution
             </a>
-            <a href="#testimonials" className="hover:text-emerald-400 transition-colors">
+            <a href="#testimonials" className="hover:text-emerald-700 transition-colors">
               Student Feedback
             </a>
-            <a href="#team" className="hover:text-emerald-400 transition-colors">
+            <a href="#team" className="hover:text-emerald-700 transition-colors">
               Team
             </a>
-            <Link href="/login" className="hover:text-emerald-400 transition-colors font-medium">
+            <Link href="/login" className="hover:text-emerald-700 transition-colors font-bold text-emerald-800">
               Platform Access
             </Link>
             <a
               href="mailto:vewai.education@gmail.com"
-              className="hover:text-emerald-400 transition-colors"
+              className="hover:text-emerald-700 transition-colors"
             >
               Contact: vewai.education@gmail.com
             </a>
           </div>
 
-          <div className="text-slate-400 text-[11px] text-center sm:text-right">
-            &copy; {new Date().getFullYear()} VEWAI. All rights reserved.
+          <div className="text-slate-500 text-[11px] text-center sm:text-right">
+            &copy; {new Date().getFullYear()} VEWAI Ltd. All rights reserved.
           </div>
         </div>
       </footer>
