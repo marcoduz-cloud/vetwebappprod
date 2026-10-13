@@ -33,30 +33,35 @@ import {
 } from "lucide-react";
 
 // Rotating hero message bubbles (defined statically outside component)
+// Duration is dynamically set to 7-10s depending on the length of each message
 const HERO_MESSAGES = [
   {
     id: 1,
     badge: "Clinical Simulation",
     text: "The interactive simulation platform authored by board-certified veterinary specialists",
     icon: Stethoscope,
+    durationMs: 8500, // 8.5 seconds (medium length)
   },
   {
     id: 2,
     badge: "Pedagogical Safety",
     text: "AI is grounded to roleplay pet owners, veterinary nurses, and team members in a closed, safe, and academically rigorous environment.",
     icon: ShieldCheck,
+    durationMs: 10000, // 10 seconds (longest message)
   },
   {
     id: 3,
     badge: "Core Competency",
     text: "Practice communication skills and clinical reasoning in a safe environment",
     icon: MessageSquare,
+    durationMs: 7500, // 7.5 seconds (shorter)
   },
   {
     id: 4,
     badge: "Educational Ethos",
     text: "Use AI to enhance learning, not to substitute it!",
     icon: Sparkles,
+    durationMs: 7000, // 7 seconds (shortest punchy message)
   },
 ];
 
@@ -116,13 +121,15 @@ export default function LandingPage() {
   const [activeMessageIndex, setActiveMessageIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
+  // Dynamic rotating hero timer: 7-10s depending on message length
   useEffect(() => {
     if (isPaused) return;
-    const timer = setInterval(() => {
+    const currentDuration = HERO_MESSAGES[activeMessageIndex].durationMs || 8000;
+    const timer = setTimeout(() => {
       setActiveMessageIndex((prev) => (prev + 1) % HERO_MESSAGES.length);
-    }, 3500);
-    return () => clearInterval(timer);
-  }, [isPaused]);
+    }, currentDuration);
+    return () => clearTimeout(timer);
+  }, [activeMessageIndex, isPaused]);
 
   // Testimonials carousel state
   const [testimonialIndex, setTestimonialIndex] = useState(0);
@@ -166,14 +173,14 @@ export default function LandingPage() {
       ────────────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-50 w-full border-b border-emerald-100/80 bg-white/90 backdrop-blur-md shadow-xs">
         <div className="container mx-auto flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
-          {/* Brand Logo - Official VEWAI™ Wordmark */}
+          {/* Brand Logo - Official VEWAI™ with Tagline */}
           <Link href="/" className="flex items-center group py-1" title="VEWAI™ - Veterinary Education with AI">
-            <div className="relative h-10 w-44 sm:h-11 sm:w-48 transition-transform duration-300 group-hover:scale-[1.02]">
+            <div className="relative h-10 w-48 sm:h-12 sm:w-56 transition-transform duration-300 group-hover:scale-[1.02]">
               <Image
-                src="/images/logo-wordmark.png"
-                alt="VEWAI™"
-                width={220}
-                height={42}
+                src="/images/logo-full.png"
+                alt="VEWAI™ - Vet Education with AI"
+                width={260}
+                height={56}
                 className="h-full w-auto object-contain"
                 priority
               />
@@ -349,9 +356,6 @@ export default function LandingPage() {
                   from { width: 0%; }
                   to { width: 100%; }
                 }
-                .cycle-progress-anim {
-                  animation: cycleProgressBar 3.5s linear infinite;
-                }
               `}</style>
 
               {/* Active animated bubble */}
@@ -364,7 +368,16 @@ export default function LandingPage() {
                 <div className="absolute top-0 left-0 right-0 h-1 bg-emerald-100 overflow-hidden">
                   <div
                     key={`${activeMessageIndex}-${isPaused}`}
-                    className={`h-full bg-emerald-500 origin-left ${isPaused ? "w-full" : "cycle-progress-anim"}`}
+                    style={
+                      isPaused
+                        ? { width: "100%" }
+                        : {
+                            animation: `cycleProgressBar ${
+                              (HERO_MESSAGES[activeMessageIndex]?.durationMs || 8000) / 1000
+                            }s linear forwards`,
+                          }
+                    }
+                    className="h-full bg-emerald-500 origin-left"
                   />
                 </div>
 
