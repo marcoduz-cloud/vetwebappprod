@@ -1144,6 +1144,9 @@ export default function LandingPage() {
             <p className="text-slate-800 font-semibold text-base sm:text-lg max-w-2xl mx-auto">
               VewAI is created by European Veterinary Specialists and clinical educators with decades of university teaching and international specialist practice.
             </p>
+            <p className="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed pt-1">
+              Following discussions with the relevant University of Nottingham teams, VEWAI is working towards formal spin-out status. Internal rollout and evaluation are the next steps towards formalisation, which remains subject to university approval.
+            </p>
           </div>
 
           {/* Featured Founders Showcase: Field Photo on Left (half page), Profiles & Dropdown CVs on Right */}
