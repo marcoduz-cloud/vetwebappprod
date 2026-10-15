@@ -118,6 +118,7 @@ export default function LandingPage() {
     { name: "Student Feedback", href: "#testimonials" },
     { name: "Our Ethos", href: "#ethos" },
     { name: "Leadership & Team", href: "#team" },
+    { name: "Privacy", href: "#privacy" },
     { name: "Register Interest", href: "#contact" },
   ];
 
@@ -1426,7 +1427,45 @@ export default function LandingPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 6: REGISTER INTEREST / EARLY ADOPTERS CONTACT
+          SECTION 7: PRIVACY & DATA MINIMISATION
+      ────────────────────────────────────────────────────────────── */}
+      <section id="privacy" className="py-16 border-t border-emerald-100/90 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto rounded-3xl border border-emerald-200/90 bg-[#f9fdfb] p-8 sm:p-10 shadow-xs">
+            <div className="flex items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 w-fit mb-4">
+              <ShieldCheck className="h-4 w-4 text-emerald-600" />
+              <span>Platform Privacy</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-5">
+              Designed to minimise personal information
+            </h2>
+            <div className="space-y-4 text-slate-700 text-sm sm:text-base leading-relaxed">
+              <p>
+                Students verify their university affiliation by email, then create a separate username and password. VEWAI does not retain their verification email address or require their real name. Their year of study determines which learning resources they can access.
+              </p>
+              <p>
+                Audio recordings and conversation transcripts are not retained. Feedback is accessible only to the individual student, allowing them to review their practice and track their progress while their account remains active, up to graduation.
+              </p>
+              <p className="pt-2 text-xs sm:text-sm text-slate-600 border-t border-emerald-100">
+                VEWAI LTD is registered with the Information Commissioner’s Office. Registration reference:{" "}
+                <a
+                  href="https://ico.org.uk/ESDWebPages/Entry/ZB996913"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-emerald-700 hover:text-emerald-800 underline underline-offset-2 inline-flex items-center gap-1"
+                >
+                  <span>ZB996913</span>
+                  <ExternalLink className="h-3 w-3" />
+                </a>
+                .
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION 8: REGISTER INTEREST / EARLY ADOPTERS CONTACT
       ────────────────────────────────────────────────────────────── */}
       <section id="contact" className="py-20 border-t border-emerald-100/90 bg-gradient-to-b from-[#eef9f4] via-[#f7fdfa] to-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -1580,45 +1619,69 @@ export default function LandingPage() {
           FOOTER (Clean Mint with Official Brand Mark & Tagline)
       ────────────────────────────────────────────────────────────── */}
       <footer className="border-t border-emerald-200 bg-[#f4fbf7] py-12 text-slate-600 text-xs">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-48 sm:h-11 sm:w-52">
-              <Image
-                src="/images/logo-full.png"
-                alt="VEWAI™ - Vet Education with AI"
-                width={220}
-                height={52}
-                className="h-full w-auto object-contain"
-              />
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-48 sm:h-11 sm:w-52">
+                <Image
+                  src="/images/logo-full.png"
+                  alt="VEWAI™ - Vet Education with AI"
+                  width={220}
+                  height={52}
+                  className="h-full w-auto object-contain"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center md:justify-end gap-6 text-slate-600 font-medium">
+              <a href="#challenge" className="hover:text-emerald-700 transition-colors">
+                The Challenge
+              </a>
+              <a href="#solution" className="hover:text-emerald-700 transition-colors">
+                How VEWAI Works
+              </a>
+              <a href="#testimonials" className="hover:text-emerald-700 transition-colors">
+                Student Feedback
+              </a>
+              <a href="#team" className="hover:text-emerald-700 transition-colors">
+                Team
+              </a>
+              <a href="#privacy" className="hover:text-emerald-700 transition-colors">
+                Privacy
+              </a>
+              <Link href="/login" className="hover:text-emerald-700 transition-colors font-bold text-emerald-800">
+                Platform Access
+              </Link>
+              <a
+                href="mailto:vewai.education@gmail.com"
+                className="hover:text-emerald-700 transition-colors"
+              >
+                Contact: vewai.education@gmail.com
+              </a>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-6 text-slate-600 font-medium">
-            <a href="#challenge" className="hover:text-emerald-700 transition-colors">
-              The Challenge
-            </a>
-            <a href="#solution" className="hover:text-emerald-700 transition-colors">
-              How VEWAI Works
-            </a>
-            <a href="#testimonials" className="hover:text-emerald-700 transition-colors">
-              Student Feedback
-            </a>
-            <a href="#team" className="hover:text-emerald-700 transition-colors">
-              Team
-            </a>
-            <Link href="/login" className="hover:text-emerald-700 transition-colors font-bold text-emerald-800">
-              Platform Access
-            </Link>
-            <a
-              href="mailto:vewai.education@gmail.com"
-              className="hover:text-emerald-700 transition-colors"
-            >
-              Contact: vewai.education@gmail.com
-            </a>
-          </div>
+          {/* Company Registration & Legal Details */}
+          <div className="pt-6 border-t border-emerald-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-4 gap-y-1 text-center sm:text-left">
+              <span className="font-semibold text-slate-700">VEWAI LTD</span>
+              <span>VAT: 530 1735 26</span>
+              <span>
+                ICO reference:{" "}
+                <a
+                  href="https://ico.org.uk/ESDWebPages/Entry/ZB996913"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-emerald-700 hover:text-emerald-800 underline underline-offset-2"
+                >
+                  ZB996913
+                </a>
+              </span>
+            </div>
 
-          <div className="text-slate-500 text-[11px] text-center sm:text-right">
-            &copy; 2025 VEWAI Ltd. All rights reserved.
+            <div className="text-center sm:text-right">
+              &copy; 2025 VEWAI Ltd. All rights reserved.
+            </div>
           </div>
         </div>
       </footer>
