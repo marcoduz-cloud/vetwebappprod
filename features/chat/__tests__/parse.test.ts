@@ -25,6 +25,6 @@ describe("parseRequestedKeys", () => {
 
   it("does not match temperature for common words with 't' (e.g. 'about', 'rate')", () => {
     const r = parseRequestedKeys("So about respiratory and heart rate.");
-    assert.deepEqual(r.canonical, ["respiratory_rate", "heart_rate"]);
+    expect(r.canonical).toEqual(["respiratory_rate", "heart_rate"]);
   });
 });
