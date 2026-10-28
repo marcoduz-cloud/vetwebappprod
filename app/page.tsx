@@ -1188,9 +1188,9 @@ export default function LandingPage() {
                     MD
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center justify-between gap-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2">
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900">Dr. Marco Duz</h3>
-                      <span className="text-[10px] sm:text-[11px] font-semibold text-emerald-800 bg-emerald-100/70 px-2 py-0.5 rounded-full border border-emerald-200 shrink-0 whitespace-nowrap">
+                      <span className="text-[10px] sm:text-[11px] font-semibold text-emerald-800 bg-emerald-100/70 px-2 py-0.5 rounded-full border border-emerald-200 shrink-0 whitespace-nowrap self-start sm:self-auto">
                         Co-Founder &amp; Clinical Lead
                       </span>
                     </div>
@@ -1291,9 +1291,9 @@ export default function LandingPage() {
                     IC
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center justify-between gap-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2">
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900">Dr. Ignacio Corradini</h3>
-                      <span className="text-[10px] sm:text-[11px] font-semibold text-emerald-800 bg-emerald-100/70 px-2 py-0.5 rounded-full border border-emerald-200 shrink-0 whitespace-nowrap">
+                      <span className="text-[10px] sm:text-[11px] font-semibold text-emerald-800 bg-emerald-100/70 px-2 py-0.5 rounded-full border border-emerald-200 shrink-0 whitespace-nowrap self-start sm:self-auto">
                         Co-Founder &amp; AI Educational Strategy
                       </span>
                     </div>
